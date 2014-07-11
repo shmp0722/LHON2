@@ -241,7 +241,7 @@ end
 %% 
 
 
-FA
+
 
 % merge both hemisphere
 for subID = 1:length(subDir);

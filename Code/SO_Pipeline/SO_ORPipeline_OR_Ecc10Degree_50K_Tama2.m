@@ -205,10 +205,10 @@ for i =1:length(subDir)
     
     cd(newDir)
     % get .pdb filename
-    ORf_CL = dir('*Lt-LGN4_lh_10Degree_ecc*_D4L4.pdb');
-    ORf_CR = dir('*Rt-LGN4_rh_10Degree_ecc*_D4L4.pdb');
-    ORf_PL = dir('*Lt-LGN4_lh_Peri10Degree*_D4L4.pdb');
-    ORf_PR = dir('*Rt-LGN4_rh_Peri10Degree*_D4L4.pdb');
+    ORf_CL = dir('*Lt-LGN4_lh_5Degree_ecc*_D4L4.pdb');
+    ORf_CR = dir('*Rt-LGN4_rh_5Degree_ecc*_D4L4.pdb');
+    ORf_PL = dir('*Lt-LGN4_lh_Peri15Degree*_D4L4.pdb');
+    ORf_PR = dir('*Rt-LGN4_rh_Peri15Degree*_D4L4.pdb');
     
     
     fgCL = fgRead(ORf_CL.name);
