@@ -9,6 +9,9 @@ function SO_ORPipeline_V13mm_clipped_LGN4mm_1201_Tama2
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% See also runSO_DivideFibersAcordingToFiberLength_percentile_Tama2
+
+
 %% Set directory
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2';
 
