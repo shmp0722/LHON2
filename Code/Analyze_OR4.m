@@ -51,6 +51,86 @@ LHON = [10:14,27];
 Ctl = [16:23,31:33,35:37];
 RP = [24:26,28,29,34,38,39];
 
+%% make TractProfile structure
+for i = 1:length(subDir)
+    for j = 1:4
+        TractProfile{i,j} = AFQ_CreateTractProfile;
+    end
+end
+
+%% AFQ_tractprofile
+for i = 1:length(subDir) %27
+    SubDir = fullfile(homeDir,subDir{i});
+    fgDir = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_in4');
+    roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
+    dtDir  = fullfile(homeDir,subDir{i},'dwi_2nd');
+    
+    cd(fgDir)
+    fgF = {'*Lt-LGN4_lh_3Degree_ecc*Rh_NOT1201_D4L2.pdb'
+        '*lh_Peri15Degree_ecc*Rh_NOT1201_D4L2.pdb'
+        '*Rt-LGN4_rh_3Degree_ecc*Lh_NOT1201_D4L2.pdb'
+        '*rh_Peri15Degree_ecc*Lh_NOT1201_D4L2.pdb'};
+    
+    SaveFile = {'Lt_3Deg_D4L2.pdb'
+        'Lt_Peri15Deg_D4L2.pdb'
+        'Rt_LGN4_lh_3Deg_D4L2.pdb'
+        'Rt_Peri15Deg_D4L2.pdb'};
+    
+    % ROI file names you want to merge
+    for j = 1:length(fgF)
+        
+        % Intersect raw OR with Not ROIs
+        
+        % load fg and ROI
+        fg  = dir(fullfile(fgDir,fgF{j}));
+%         [~,ik] = sort(cat(2,fg.datenum),2,'ascend');
+%         fg = fg(ik);
+%         % fg        
+        fg_cur  = fgRead(fg.name);
+        
+%         % roi
+%         ROIname = {'Lh_NOT1201.mat','Rh_NOT1201.mat'};
+%         switch j
+%             case {1,2}
+%                 ROIf = fullfile(roiDir, ROIname{2});
+%             case {3,4}
+%                 ROIf = fullfile(roiDir, ROIname{1});
+%         end;        
+%         ROI = dtiReadRoi(ROIf);
+%         
+%         % dtiIntersectFibers
+%         [fgOut1,~, ~, ~] = dtiIntersectFibersWithRoi([], 'not', [], ROI, fg_cur);        
+%                     fgOut1.pathwayInfo = [];       
+%        
+%          
+%         %% AFQ_RemoveFiberOutlier
+%         maxDist = 4;
+%         maxLen = 2;
+%         numNodes = 100;
+%         M = 'mean';
+%         count = 1;
+%         show = 0;
+%         
+%         [fgclean ,~] =  AFQ_removeFiberOutliers(fgOut1,maxDist,maxLen,numNodes,M,count,show);
+%                 
+        % load dt6
+        dt =dtiLoadDt6(fullfile(dtDir,'dt6.mat'));
+        % calculate the diffusivities along the tract
+
+        TractProfile{i,j} = SO_FiberValsInTractProfiles(fg_cur,dt,'AP',100,1);        
+        
+%          % if you want to check the fiber looks like
+%         AFQ_RenderFibers(fgOut1,'numfibers',100)
+%         AFQ_RenderRoi(ROI)
+    end
+end
+%% save 
+cd /biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results/5_15Degree/ORin4
+
+save TractProfile_ORin4 TractProfile 
+
+return
+
 %% dtiIntersectFibers
 for i = 1:length(subDir)
     SubDir = fullfile(homeDir,subDir{i});
