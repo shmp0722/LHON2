@@ -3,12 +3,12 @@ function Analyze_OR4
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2';
 
 subDir = {...
-    'JMD1-MM-20121025-DWI'
-    'JMD2-KK-20121025-DWI'
+     'JMD1-MM-20121025-DWI'
     'JMD3-AK-20121026-DWI'
-    'JMD4-AM-20121026-DWI'
     'JMD5-KK-20121220-DWI'
     'JMD6-NO-20121220-DWI'
+    'JMD2-KK-20121025-DWI'
+    'JMD4-AM-20121026-DWI'
     'JMD7-YN-20130621-DWI'
     'JMD8-HT-20130621-DWI'
     'JMD9-TY-20130621-DWI'
@@ -19,12 +19,12 @@ subDir = {...
     'LHON5-HS-20121220-DWI'
     'LHON6-SS-20121221-DWI'
     'JMD-Ctl-MT-20121025-DWI'
-    'JMD-Ctl-SY-20130222DWI'
     'JMD-Ctl-YM-20121025-DWI'
+    'JMD-Ctl-SY-20130222DWI'
     'JMD-Ctl-HH-20120907DWI'
+    'JMD-Ctl-HT-20120907-DWI'
     'JMD-Ctl-FN-20130621-DWI'
     'JMD-Ctl-AM-20130726-DWI'
-    'JMD-Ctl-HT-20120907-DWI'
     'JMD-Ctl-SO-20130726-DWI'
     'RP1-TT-2013-11-01'
     'RP2-KI-2013-11-01'
@@ -59,7 +59,7 @@ for i = 1:length(subDir)
 end
 
 %% AFQ_tractprofile
-for i = 1:length(subDir) %27
+for i = 25:length(subDir) %12,13,14,15
     SubDir = fullfile(homeDir,subDir{i});
     fgDir = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_in4');
     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
@@ -76,47 +76,19 @@ for i = 1:length(subDir) %27
         'Rt_LGN4_lh_3Deg_D4L2.pdb'
         'Rt_Peri15Deg_D4L2.pdb'};
     
-    % ROI file names you want to merge
     for j = 1:length(fgF)
         
-        % Intersect raw OR with Not ROIs
-        
-        % load fg and ROI
+        % load fg
         fg  = dir(fullfile(fgDir,fgF{j}));
 %         [~,ik] = sort(cat(2,fg.datenum),2,'ascend');
 %         fg = fg(ik);
 %         % fg        
-        fg_cur  = fgRead(fg.name);
-        
-%         % roi
-%         ROIname = {'Lh_NOT1201.mat','Rh_NOT1201.mat'};
-%         switch j
-%             case {1,2}
-%                 ROIf = fullfile(roiDir, ROIname{2});
-%             case {3,4}
-%                 ROIf = fullfile(roiDir, ROIname{1});
-%         end;        
-%         ROI = dtiReadRoi(ROIf);
-%         
-%         % dtiIntersectFibers
-%         [fgOut1,~, ~, ~] = dtiIntersectFibersWithRoi([], 'not', [], ROI, fg_cur);        
-%                     fgOut1.pathwayInfo = [];       
-%        
-%          
-%         %% AFQ_RemoveFiberOutlier
-%         maxDist = 4;
-%         maxLen = 2;
-%         numNodes = 100;
-%         M = 'mean';
-%         count = 1;
-%         show = 0;
-%         
-%         [fgclean ,~] =  AFQ_removeFiberOutliers(fgOut1,maxDist,maxLen,numNodes,M,count,show);
-%                 
+        fg_cur  = fgRead(fg.name);        
+                 
         % load dt6
         dt =dtiLoadDt6(fullfile(dtDir,'dt6.mat'));
+        
         % calculate the diffusivities along the tract
-
         TractProfile{i,j} = SO_FiberValsInTractProfiles(fg_cur,dt,'AP',100,1);        
         
 %          % if you want to check the fiber looks like
@@ -127,10 +99,12 @@ end
 %% save 
 cd /biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results/5_15Degree/ORin4
 
-save TractProfile_ORin4 TractProfile 
+save TractProfile_ORin4_notFinish TractProfile 
 
 return
 
+%%
+load TractProfile_ORin4
 %% dtiIntersectFibers
 for i = 1:length(subDir)
     SubDir = fullfile(homeDir,subDir{i});

@@ -21,7 +21,7 @@ subDir = {...
 %     'LHON3-TO-20121130-DWI'
 %     'LHON4-GK-20121130-DWI'
 %     'LHON5-HS-20121220-DWI'
-%     'LHON6-SS-20121221-DWI'
+    'LHON6-SS-20121221-DWI'
 %     'JMD-Ctl-MT-20121025-DWI'
 %     'JMD-Ctl-SY-20130222DWI'
 %     'JMD-Ctl-YM-20121025-DWI'
@@ -33,7 +33,7 @@ subDir = {...
 %     'RP1-TT-2013-11-01'
 %     'RP2-KI-2013-11-01'
 %     'RP3-TO-13120611-DWI'
-    'LHON6-SS-20131206-DWI'
+%     'LHON6-SS-20131206-DWI'
 %     'RP4-AK-2014-01-31'
 %     'RP5-KS-2014-01-31'
 %     'JMD3-AK-20140228-dMRI'
@@ -109,7 +109,7 @@ for i = 1:length(subDir)
         end
     end
 end
-return 
+% return 
 
 %% to get diffusivities
 Analyze_OR4
