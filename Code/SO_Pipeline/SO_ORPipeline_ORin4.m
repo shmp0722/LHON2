@@ -18,10 +18,10 @@ subDir = {...
 %     'JMD9-TY-20130621-DWI'
 %     'LHON1-TK-20121130-DWI'
 %     'LHON2-SO-20121130-DWI'
-%     'LHON3-TO-20121130-DWI'
+    'LHON3-TO-20121130-DWI'
 %     'LHON4-GK-20121130-DWI'
 %     'LHON5-HS-20121220-DWI'
-    'LHON6-SS-20121221-DWI'
+%     'LHON6-SS-20121221-DWI'
 %     'JMD-Ctl-MT-20121025-DWI'
 %     'JMD-Ctl-SY-20130222DWI'
 %     'JMD-Ctl-YM-20121025-DWI'
@@ -49,7 +49,7 @@ subDir = {...
 };
 
 
-%% dtiIntersectFibers
+%% dtiIntersectFibersWithRoi
 for i = 1:length(subDir)
     SubDir = fullfile(homeDir,subDir{i});
     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_in4');

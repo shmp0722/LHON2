@@ -6,6 +6,8 @@ function V1RoiCutEccentricity(MaxDegree)
 %
 %% Set the path to data directory
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+homeDir2 = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2';
+
 subDir = {...
      'JMD1-MM-20121025-DWI'
     'JMD3-AK-20121026-DWI'
@@ -33,7 +35,7 @@ subDir = {...
     'RP1-TT-2013-11-01'
     'RP2-KI-2013-11-01'
     'RP3-TO-13120611-DWI'
-%     'LHON6-SS-20131206-DWI'
+    'LHON6-SS-20131206-DWI'
     'RP4-AK-2014-01-31'
     'RP5-KS-2014-01-31'
     'JMD3-AK-20140228-dMRI'
@@ -107,7 +109,32 @@ for i = 1:length(subDir); %20
         dtiWriteRoi(ROI,outName);
     end
 end
+
+
+%% transform ROI.nii.gz to ROI.mat 
+for i = 1:length(subDir); %20 
     
+    SubDir = fullfile(homeDir2,subDir{i});
+    eccDir  = fullfile(homeDir,subDir{i},'fs_Retinotopy2');
+    ROIdir  = fullfile(SubDir,'/dwi_2nd/ROIs');
+    ROIni = {sprintf('%s_%dDegree_ecc','lh',MaxDegree),...
+        sprintf('%s_Peri%dDegree_ecc','lh',MaxDegree),...
+        sprintf('%s_%dDegree_ecc','rh',MaxDegree),...
+        sprintf('%s_Peri%dDegree_ecc','rh',MaxDegree),...
+       };
+    cd(eccDir)
+    %% clean it and save it in .mat 
+    for j = 1: length(ROIni)
+        nifti = fullfile(eccDir,[ROIni{j},'.nii.gz']);
+        outName = [ROIni{j},'.mat'];       
+        ROI = dtiRoiFromNifti(nifti,[],outName,'mat',[],0);
+        % clean ROI
+        ROI = dtiRoiClean(ROI,0,['fillholes', 'dilate', 'removesat']);      
+        % save roi in .mat in ROI directory
+        cd(ROIdir)
+        dtiWriteRoi(ROI,outName);
+    end
+end
     
     
     
