@@ -1,5 +1,7 @@
 function TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight)
 %
+% TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight)
+%
 % Calculate diffusion properties along the tract and keep the result in
 % Tractprofile structure
 %

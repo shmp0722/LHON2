@@ -53,7 +53,7 @@ RP = [24:26,28,29,34,38,39];
 
 %% make TractProfile structure
 for i = 1:length(subDir)
-    for j = 1:4
+    for j = 1:8
         TractProfile{i,j} = AFQ_CreateTractProfile;
     end
 end
