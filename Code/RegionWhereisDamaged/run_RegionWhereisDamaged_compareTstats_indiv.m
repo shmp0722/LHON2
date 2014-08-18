@@ -1,4 +1,4 @@
-function RegionWhereisDamaged_compareTstats_indiv
+function run_RegionWhereisDamaged_compareTstats_indiv
 
 RegionWhereisDamaged_compareTstats_indiv(1:2,'ad','individual','png')
 RegionWhereisDamaged_compareTstats_indiv(1:23,'rd','individual','png')

@@ -3,32 +3,7 @@ function ORfig_2
 % make good figure 2
 
 
-homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
-
-subDir ={
-    'JMD1-MM-20121025-DWI'
-    'JMD2-KK-20121025-DWI'
-    'JMD3-AK-20121026-DWI'
-    'JMD4-AM-20121026-DWI'
-    'JMD5-KK-20121220-DWI'
-    'JMD6-NO-20121220-DWI'
-    'JMD7-YN-20130621-DWI'
-    'JMD8-HT-20130621-DWI'
-    'JMD9-TY-20130621-DWI'
-    'LHON1-TK-20121130-DWI'
-    'LHON2-SO-20121130-DWI'
-    'LHON3-TO-20121130-DWI'
-    'LHON4-GK-20121130-DWI'
-    'LHON5-HS-20121220-DWI'
-    'LHON6-SS-20121221-DWI'
-    'JMD-Ctl-MT-20121025-DWI'
-    'JMD-Ctl-SY-20130222DWI'
-    'JMD-Ctl-YM-20121025-DWI'
-    'JMD-Ctl-HH-20120907DWI'
-    'JMD-Ctl-HT-20120907-DWI'
-    'JMD-Ctl-FN-20130621-DWI'
-    'JMD-Ctl-AM-20130726-DWI'
-    'JMD-Ctl-SO-20130726-DWI'};
+[homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj;
 
 
 %%
@@ -51,8 +26,8 @@ fg1 = fgRead('RORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
 fg2 = fgRead('LORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
 
 % occipital callosal fiber
-cd(OCFfgDir)
-fg3 = fgRead('OCF_fsCC_Ctr150_clean.pdb');
+% cd(OCFfgDir)
+% fg3 = fgRead('OCF_fsCC_Ctr150_clean.pdb');
 
 cd /biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/JMD-Ctl-SO-20130726-DWI/dwi_2nd/fibers/conTrack/OT_5K
 
@@ -110,26 +85,47 @@ axis off
 % axis on
 
 
-%  camlight('headlight');
+camlight('headlight');
     %set(lightH, 'position',lightPosition);
 %     lighting('gouraud');
 %     cameratoolbar('Show');
+hold off;
 
-return
+%%
+FG = {fg1 , fg2, fg4, fg5};
+%
+if(~exist('valName','var') || isempty(valName))
+    valName = 'fa';
+end
 
-%% save in .eps
-   
-%     fname = sprintf('%s%s',subDir{i},'opticpathway.eps');
-%     print(gcf,'-dpng','Figure2_axialView.png');
+
+figure;hold on;
+    for kk = 1:length(FG)
+        vals = dtiGetValFromFibers(dt.dt6,FG{kk},inv(dt.xformToAcpc),valName);
+        rgb = vals2colormap(vals);
+        switch kk
+            case {1,2}
+                
+                AFQ_RenderFibers(FG{kk},'color',rgb,'crange',[0.3 0.7],'newfig',0,'numfibers',100);
+            case {3,4}
+                AFQ_RenderFibers(FG{kk},'color',rgb,'crange',[0.3 0.7],'newfig',0);
+        end
+    end
     
-    print(gcf, '-r0','-depsc2','Figure2_axialView.eps','-r400');
-%% in png
-print(gcf, '-dpng','Figure2_white2_scaleON_axial.png');
+    % Put T1w
+    t1 = niftiRead(dt.files.t1);    
+    AFQ_AddImageTo3dPlot(t1, [0, 0, -30]);
+    
+    axis image
+    axis off
+    % adjust view and give title
+    view(0,89)
+
 
 %% Render fiber with diffusion measures (FA, MD, AD, RD)
 
 figure; hold on;
-AFQ_RenderFibers(fg1,'dt',dt6), 'newfig', [0],'numfibers', 1000);% ,'color', [0.854,0.65,0.125],'radius',[0.5,2]); %fg() = fg
+AFQ_RenderFibers(fg1,'dt',dt6, 'newfig', [0],'numfibers', 100);% ,'color', [0.854,0.65,0.125],'radius',[0.5,2]); %fg() = fg
 AFQ_RenderFibers(fg2, 'newfig', [0],'numfibers', 1000 ,'color', [0.854,0.65,0.125],'radius',[0.5,2]); %fg() = fg
 % OCF
 % AFQ_RenderFibers(fg3, 'newfig', [0],'numfibers', 100 ,'color', [0.4, 0.7, 0.7],'radius',[0.5,2]); %fg() = fg
@@ -140,7 +136,7 @@ AFQ_RenderFibers(fg5, 'newfig', [0],'numfibers', 50 ,'color', [0.67,0.27,0.51],'
 
 %% dispic
 
-for i =[7,];%[1,3,5:7, 9,10,11,16,17,20:21];%[2,4,8,9,12:15,18:23];
+for i =[23];%[1,3,5:7, 9,10,11,16,17,20:21];%[2,4,8,9,12:15,18:23];
     
     SubDir=fullfile(homeDir,subDir{i});
     ORfgDir = fullfile(SubDir,'/dwi_2nd/fibers');
