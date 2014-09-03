@@ -1,5 +1,8 @@
 function [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2
-
+%
+% [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2;
+%
+%
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2';
 
 

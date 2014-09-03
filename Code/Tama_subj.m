@@ -1,7 +1,7 @@
 function [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj
 
 % set directory to Tamagawa subject groups
-
+% [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj
 
 %% Set the path to data directory
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
