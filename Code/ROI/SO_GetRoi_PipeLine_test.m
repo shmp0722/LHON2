@@ -1,67 +1,24 @@
-function SO_GetRoi_PipeLine
+function SO_GetRoi_PipeLine_test
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FS could not Autosegment JMD-Ctl-FN cerebral cortex!!
 % Never
 
 % Set directory
-homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
-% fsDir          = getenv('SUBJECTS_DIR');
-fsDir   = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/freesurfer';
 
-% subs in colum
-subJ = {...
-%     'JMD1-MM-20121025-DWI'...
-%     'JMD2-KK-20121025-DWI'...
-%     'JMD3-AK-20121026-DWI'...
-%     'JMD4-AM-20121026-DWI'...
-%     'JMD5-KK-20121220-DWI'...
-%     'JMD6-NO-20121220-DWI'...
-%     'JMD7-YN-20130621-DWI'...
-%     'JMD8-HT-20130621-DWI'...
-%     'JMD9-TY-20130621-DWI'...
-%     'LHON1-TK-20121130-DWI'...
-%     'LHON2-SO-20121130-DWI'...
-%     'LHON3-TO-20121130-DWI'...
-%     'LHON4-GK-20121130-DWI'...
-%     'LHON5-HS-20121220-DWI'...
-%     'LHON6-SS-20121221-DWI'...
-%     'JMD-Ctl-MT-20121025-DWI'...
-%     'JMD-Ctl-YM-20121025-DWI'...
-%     'JMD-Ctl-SY-20130222DWI'...
-%     'JMD-Ctl-HH-20120907DWI'...
-%     'JMD-Ctl-HT-20120907-DWI'...
-%     'JMD-Ctl-FN-20130621-DWI'...
-%     'JMD-Ctl-AM-20130726-DWI'...
-%     'JMD-Ctl-SO-20130726-DWI'...
-%     'RP1-TT-2013-11-01'...
-%     'RP2-KI-2013-11-01'...
-%     'RP3-TO-13120611-DWI'...
-    'LHON6-SS-20131206-DWI'...
-%     'RP4-AK-2014-01-31'...
-%     'RP5-KS-2014-01-31'... 
-%     'JMD3-AK-20140228-dMRI'
-%     'JMD-Ctl-09-RN-20130909'
-%     'JMD-Ctl-10-JN-20140205'
-%     'JMD-Ctl-11-MT-20140217'
-%     'RP6-SY-2014-02-28-dMRI'};
-%   'Ctl-12-SA-20140307'
-%     'Ctl-13-MW-20140313-dMRI-Anatomy'
-%     'Ctl-14-YM-20140314-dMRI-Anatomy'};
-%     'RP7-EU-2014-03-14-dMRI-Anatomy'
-%     'RP8-YT-2014-03-14-dMRI-Anatomy'
-    };
+[homeDir,subDir,~,~,~,~,~] = Tama_subj;
+fsDir = fullfile(homeDir,'freesurfer');
 
 %% fs_mgzSegToNifti.m
 % create aparc+aseg.nii.gz from .mgz
 
 % subject loop
-for i = 1:length(subJ)
-    mgzInDir = fullfile(fsDir,subJ{i},'/mri');
+for i = 1:length(subDir)
+    mgzInDir = fullfile(fsDir,subDir{i},'/mri');
     mgzInF = {'aparc+aseg','aseg','aparc.a2009s+aseg'};%,'brain.finalsurfs','brainmask.auto','wm'};
     for k = 1:length(mgzInF)
         mgzIn = sprintf('%s.mgz',fullfile(mgzInDir, mgzInF{k}));
-        refImg = fullfile(homeDir,subJ{i},'t1.nii.gz');
+        refImg = fullfile(homeDir,subDir{i},'t1.nii.gz');
         outName = sprintf('%s.nii.gz',fullfile(mgzInDir,mgzInF{k}));
         orient = 'RAS';
         fs_mgzSegToNifti(mgzIn, refImg, outName, orient)
@@ -74,17 +31,17 @@ end
 labelVal = {'42','3'};
 outfileName = {'Right-Cerebral-Cortex','Left-Cerebral-Cortex'};
 
-for i = 1:length(subJ)
-    matRoiDir = fullfile(homeDir,subJ{i},'dwi_2nd/ROIs');
-
+for i = 1:length(subDir)
+    matRoiDir = fullfile(homeDir,subDir{i},'dwi_2nd/ROIs');
+    
     %loop for every label
     
     for ii =1:length(outfileName);
-        fsInDir =fullfile(fsDir,subJ{i},'mri');
+        fsInDir =fullfile(fsDir,subDir{i},'mri');
         cd(fsInDir)
-        fsIn = fullfile(fsDir,subJ{i},'mri', 'aseg.nii.gz');
+        fsIn = fullfile(fsDir,subDir{i},'mri', 'aseg.nii.gz');
         % create and save nifti ROI in 'fs/mri' directory
-        savefile =fullfile(fsDir,subJ{i},'mri',outfileName{ii});
+        savefile =fullfile(fsDir,subDir{i},'mri',outfileName{ii});
         fs_aparcAsegLabelToNiftiRoi(fsIn,labelVal{ii},savefile)
         
         % Save '.mat' ROI in /ROIs directory
@@ -104,78 +61,79 @@ for i = 1:length(subJ)
 end
 %% Create fs.mat ROI from aparc+ase.nii.gz
 % loop for each subject
-for i =1:length(subJ);
-    %     cd(mgzInDir)
+for i =1:length(subDir);
     
-    fsIn =fullfile(fsDir,subJ{i},'mri','aparc+aseg.nii.gz');    
+    fsIn =fullfile(fsDir,subDir{i},'mri','aparc+aseg.nii.gz');
+    
     %% Run fs_aparcAsegLabelToNiftiRoi
+    
     labelVal = {...
-%                 '1021'
-%                 '2021'
-                '85'
-                '4'
-                '43'
-                '17'
-                '53'
-                '12'
-                '51'
-                '2'
-                '41'
-                '251'
-                '252'
-                '253'
-                '254'
-                '255'
-                '9'
-                '10'
-                '48'
-                '49'
-                '16'
-                '24'
-                '7'
-                '8'
-                '46'
-                '47'
-                '219'
-                '220'
-                '16'
-%         '400'
-%         '401'
+        %                 '1021'
+        %                 '2021'
+        '85'
+        '4'
+        '43'
+        '17'
+        '53'
+        '12'
+        '51'
+        '2'
+        '41'
+        '251'
+        '252'
+        '253'
+        '254'
+        '255'
+        '9'
+        '10'
+        '48'
+        '49'
+        '16'
+        '24'
+        '7'
+        '8'
+        '46'
+        '47'
+        '219'
+        '220'
+        '16'
+        %         '400'
+        %         '401'
         };
     
     
     outfileName = {...
-%                 'ctx-lh-pericalcarine'
-%                 'ctx-rh-pericalcarine'
-                'Optic-Chiasm'
-                'Left-Lateral-Ventricle'
-                'Right-Lateral-Ventricle'
-                'Left-Hippocampus'
-                'Right-Hippocampus'
-                'Left-Putamen'
-                'Right-Putamen'
-                'Left-Cerebral-White-Matter'
-                'Right-Cerebral-White-Matter'
-                'CC_Posterior'
-                'CC_Mid_Posterior'
-                'CC_Central'
-                'CC_Mid_Anterior'
-                'CC_Anterior'
-                'Left-Thalamus'
-                'Left-Thalamus-Proper'
-                'Right-Thalamus'
-                'Right-Thalamus-Proper'
-                'Brain-Stem'
-                'CSF'
-                'Left-Cerebellum-White-Matter'
-                'Left-Cerebellum-Cortex'
-                'Right-Cerebellum-White-Matter'
-                'Right-Cerebellum-Cortex'
-                'Cerebral_White_Matter'
-                'Cerebral_Cortex'
-                'Brain-Stem'
-%         'V1'
-%         'V2'
+        %                 'ctx-lh-pericalcarine'
+        %                 'ctx-rh-pericalcarine'
+        'Optic-Chiasm'
+        'Left-Lateral-Ventricle'
+        'Right-Lateral-Ventricle'
+        'Left-Hippocampus'
+        'Right-Hippocampus'
+        'Left-Putamen'
+        'Right-Putamen'
+        'Left-Cerebral-White-Matter'
+        'Right-Cerebral-White-Matter'
+        'CC_Posterior'
+        'CC_Mid_Posterior'
+        'CC_Central'
+        'CC_Mid_Anterior'
+        'CC_Anterior'
+        'Left-Thalamus'
+        'Left-Thalamus-Proper'
+        'Right-Thalamus'
+        'Right-Thalamus-Proper'
+        'Brain-Stem'
+        'CSF'
+        'Left-Cerebellum-White-Matter'
+        'Left-Cerebellum-Cortex'
+        'Right-Cerebellum-White-Matter'
+        'Right-Cerebellum-Cortex'
+        'Cerebral_White_Matter'
+        'Cerebral_Cortex'
+        'Brain-Stem'
+        %         'V1'
+        %         'V2'
         };
     
     
@@ -184,7 +142,7 @@ for i =1:length(subJ);
     for ii = 1:length(outfileName);
         
         % save nifti ROI in mri directory
-        savefile =fullfile(fsDir,subJ{i},'mri',outfileName{ii});
+        savefile =fullfile(fsDir,subDir{i},'mri',outfileName{ii});
         fs_aparcAsegLabelToNiftiRoi(fsIn,labelVal{ii},savefile)
         
         % Save 'mat' ROI in ROIs directory
@@ -192,7 +150,7 @@ for i =1:length(subJ);
         nifti       =  sprintf('%s.nii.gz',savefile);
         maskValue   =  0;       % All nonZero values are used for the mask
         outName     = sprintf('%s.mat',outfileName{ii});
-        outFile     = fullfile(homeDir,subJ{i},'dwi_2nd','ROIs',outName);
+        outFile     = fullfile(homeDir,subDir{i},'dwi_2nd','ROIs',outName);
         outType     = 'mat';  binary = true; save = true;
         
         % run dtiRoiFromNifti
@@ -206,43 +164,42 @@ end
 % If you want to get other file. SEE: fs_annotationToLabelFiles.m
 % Try 'aparc.annot.a2009s.ctab' as annotation.
 % loop for subjects
-for i = 1:length(subJ)
+for i = 1:length(subDir)
     % loop for hemisphere
-    hemi= {'lh','rh'};
-    for k = 1:length(hemi)
-%         hemisphere     = {'lh','rh'};
+    for k = 1:2
+        hemisphere     = {'lh','rh'};
         annotation     = 'aparc';
-%                        = 'aparc.annot.a2009s.ctab';
-        annotationFile = fullfile(fsDir,subJ{i},'label',annotation);
-%         regMgzFile    = fullfile(fsDir,subJ{i},'/mri/rawavg.mgz');
-%         
-%         cmd            = fs_annotationToLabelFiles(subJ{i},annotationFile,hemisphere{k});
+        %                        = 'aparc.annot.a2009s.ctab';
+        annotationFile = fullfile(fsDir,subDir{i},'label',annotation);
+        regMgzFile    = fullfile(fsDir,subDir{i},'/mri/rawavg.mgz');
+        
+        cmd            = fs_annotationToLabelFiles(subDir{i},annotationFile,hemisphere{k});
         
         labelfile_name ={...
             %             'G_and_S_occipital_inf','G_cuneus','G_occipital_middle','G_occipital_sup'...
             %             'G_oc-temp_lat-fusifor','G_oc-temp_med-Lingual','Pole_occipital','S_calcarine'...
             %             'S_collat_transv_post','S_oc_middle_and_Lunatus','S_oc_sup_and_transversal'...
             %             'S_occipital_ant','S_oc-temp_lat','S_oc-temp_med_and_Lingual','S_parieto_occipital'...
-%             'cortex'
+            %             'cortex'
             'V1','V2'
-%             'MT'
+            %             'MT'
             } ;
         
         % loop for label
-        for j = 1:length(labelfile_name)    
+        for j = 1:length(labelfile_name)
             %% ROI not delated
             % define label file name
-            
+            hemi= {'lh','rh'};
             hemiLabelfileName = sprintf('%s.%s',hemi{k},labelfile_name{j});
             labelfile    = sprintf('%s.label',hemiLabelfileName);
-            labelFileName = fullfile(fsDir,subJ{i},'label',labelfile);
+            labelFileName = fullfile(fsDir,subDir{i},'label',labelfile);
             
             % define ROI name
-            niftiRoiName  = fullfile(fsDir,subJ{i},'label',hemiLabelfileName);
-            regMgzFile    = fullfile(fsDir,subJ{i},'mri/rawavg.mgz');
+            niftiRoiName  = fullfile(fsDir,subDir{i},'label',hemiLabelfileName);
+            regMgzFile    = fullfile(fsDir,subDir{i},'mri/rawavg.mgz');
             
             % run fs_labelFileToNiftiRoi
-            fs_labelFileToNiftiRoi(subJ{i},labelFileName,niftiRoiName,hemi{k},regMgzFile);
+            fs_labelFileToNiftiRoi(subDir{i},labelFileName,niftiRoiName,hemi{k},regMgzFile);
             
             % Save 'mat' ROI in ROIs directory
             % Set parameters
@@ -252,7 +209,7 @@ for i = 1:length(subJ)
             
             hemiLabelfileName(hemiLabelfileName == '.') = '_';
             outName     = sprintf('%s.mat',hemiLabelfileName);
-            outFile     = fullfile(homeDir,subJ{i},'dwi_2nd','ROIs',outName);
+            outFile     = fullfile(homeDir,subDir{i},'dwi_2nd','ROIs',outName);
             outType     = 'mat';  binary = true; save = true;
             
             % run dtiRoiFromNifti
@@ -263,10 +220,10 @@ for i = 1:length(subJ)
             % define label file name
             hemiLabelfileName = sprintf('%s.%s',hemi{k},labelfile_name{j});
             labelfile     = sprintf('%s_smooth3mm',hemiLabelfileName);
-            labelFileName = sprintf('%s.label',fullfile(fsDir,subJ{i},'label',labelfile));
+            labelFileName = sprintf('%s.label',fullfile(fsDir,subDir{i},'label',labelfile));
             
             % define ROI name
-            niftiRoiName  = fullfile(fsDir,subJ{i},'label',labelfile);
+            niftiRoiName  = fullfile(fsDir,subDir{i},'label',labelfile);
             % regMgzFile    = fullfile(fsDir,subJ{i},'/mri/rawavg.mgz');
             % run fs_labelFileToNiftiRoi
             % fs_labelFileToNiftiRoi(subJ{i},labelFileName,niftiRoiName,hemi{k},regMgzFile);
@@ -279,7 +236,7 @@ for i = 1:length(subJ)
             
             hemiLabelfileName(hemiLabelfileName == '.') = '_';
             outName     = sprintf('%s_smooth3mm.mat',hemiLabelfileName);
-            outFile     = fullfile(homeDir,subJ{i},'dwi_2nd','ROIs',outName);
+            outFile     = fullfile(homeDir,subDir{i},'dwi_2nd','ROIs',outName);
             %             outType     = 'mat';  binary = true; save = true;
             
             % run dtiRoiFromNifti
@@ -293,18 +250,18 @@ end
 % SO_dtiRoiClip_V1_3mm
 %
 % this code give me more posterior part of V13mm_smooth than -60mm
-for i = 1:length(subJ)  % 3 imcomplete
-
-    % define derectory   
-    RoiDir = fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs');
-       
+for i = 1:length(subDir)  % 3 imcomplete
+    
+    % define derectory
+    RoiDir = fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs');
+    
     roi5 =fullfile(RoiDir,'lh_V1_smooth3mm.mat');
     roi6 =fullfile(RoiDir,'rh_V1_smooth3mm.mat');
-
+    
     cd(RoiDir)
     
     %% Argument checking
-   
+    
     if ischar(roi5)
         roi5 = dtiReadRoi(roi5);
     end
@@ -324,28 +281,28 @@ end
 %% lets remove V1_smooth 3mm_NOT from cerebral cortex
 % SO_dtiRoiClean_GM.m
 %%  loop subject
-for i = 1:length(subJ)
-
-    RoiDir = fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs');
+for i = 1:length(subDir)
+    
+    RoiDir = fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs');
     roiF = {'lh_V1_smooth3mm_NOT.mat','rh_V1_smooth3mm_NOT.mat'};
     roif = {'Left-Cerebral-Cortex.mat','Right-Cerebral-Cortex.mat'};
     cd(RoiDir)
     for k = 1:length(roiF)
-    % load Roi
-    roi1 = dtiReadRoi(roiF{k});
+        % load Roi
+        roi1 = dtiReadRoi(roiF{k});
         
-    % Clean the Roi
-    roi1 = dtiRoiClean(roi1,3,['fillholes', 'dilate', 'removesat']);  
-    roi1.name = [roi1.name, '_clean'];
-    dtiWriteRoi(roi1,roi1.name,1)
-    
-    roi2= dtiReadRoi(roif{k});
-    
-    newROI = dtiSetdiffROIs(roi2,roi1);
-    name = {'Left-Cerebral-Cortex_V13mm_setdiff','Right-Cerebral-Cortex_V13mm_setdiff'};
-    newROI.name = name{k};
-    dtiWriteRoi(newROI, newROI.name,1)
-    
+        % Clean the Roi
+        roi1 = dtiRoiClean(roi1,3,['fillholes', 'dilate', 'removesat']);
+        roi1.name = [roi1.name, '_clean'];
+        dtiWriteRoi(roi1,roi1.name,1)
+        
+        roi2= dtiReadRoi(roif{k});
+        
+        newROI = dtiSetdiffROIs(roi2,roi1);
+        name = {'Left-Cerebral-Cortex_V13mm_setdiff','Right-Cerebral-Cortex_V13mm_setdiff'};
+        newROI.name = name{k};
+        dtiWriteRoi(newROI, newROI.name,1)
+        
     end
 end
 
@@ -357,9 +314,9 @@ end
 % run MergeROIs_NOTROI5.m and MergeROIs_Wm.m
 %
 %%loop subject
-for i = 1:length(subJ)
+for i = 1:length(subDir)
     
-    cd(fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs'))
+    cd(fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs'))
     
     % ROI file names you want to merge
     for k=1:2;
@@ -394,9 +351,9 @@ end
 %% MergeROI_fsCC
 
 %loop subject
-for i = 1:length(subJ)
+for i = 1:length(subDir)
     
-    cd(fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs'))
+    cd(fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs'))
     
     % ROI file names you want to merge
     roiname = {'CC_Anterior','CC_Central','CC_Mid_Anterior','CC_Mid_Posterior','CC_Posterior'};
@@ -417,9 +374,9 @@ for i = 1:length(subJ)
 end
 
 %% WMmask
-for i = 1:length(subJ)
+for i = 1:length(subDir)
     
-    cd(fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs'))
+    cd(fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs'))
     
     % ROI file names you want to merge
     roiname = {'Left-Cerebral-White-Matter_Lt-LGN4'
@@ -442,15 +399,15 @@ for i = 1:length(subJ)
     % Save the new NOT ROI
     dtiWriteRoi(newROI,newROI.name,1)
     % Save new niROI
-    imagef = fullfile(homeDir,subJ{i},'t1.nii.gz'); 
+    imagef = fullfile(homeDir,subDir{i},'t1.nii.gz');
     ni = dtiRoiNiftiFromMat(newROI,imagef);
     
 end
 
 %% MergeROIsV1V2
-for i = 1:length(subJ)
+for i = 1:length(subDir)
     for j = 1:4
-        cd(fullfile(homeDir,subJ{i},'/dwi_2nd/ROIs'))
+        cd(fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs'))
         
         roi1 = {'lh_V1.mat','lh_V1_smooth3mm','rh_V1.mat','rh_V1_smooth3mm'};
         roi2 = {'lh_V2.mat','lh_V2_smooth3mm','rh_V2.mat','rh_V2_smooth3mm'};

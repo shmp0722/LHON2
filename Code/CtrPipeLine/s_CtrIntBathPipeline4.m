@@ -1,7 +1,6 @@
-%% S_CtrInitBatchPipeline for hiro
-% Multi-Subject Tractography
+%% S_CtrInitBatchPipeline
+% Multi-Subject conTrack Tractography
 %
-
 baseDir = '/biac4/wandell/biac2/wandell2/data/diffusion/horiguchi/20121220_3701';
 cd(baseDir)
 

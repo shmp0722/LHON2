@@ -1,0 +1,44 @@
+function s_ctrIntBathPipeline_Mt_OCF
+% Multi-Subject Tractography for Tamagawa_subjects using conTrack
+%
+%
+%%
+matlabpool open 5
+%% Directory
+[homeDir,subDir,~,~,~,~,~] = Tama_subj2;
+cd(homeDir)
+
+%% Set ctrInitBatchParams
+
+parfor k= 1:length(subDir)
+    ctrParams = ctrInitBatchParams;
+    ctrParams.projectName = 'MtandOCF';
+    ctrParams.logName = 'myConTrackLog';
+    ctrParams.baseDir = homeDir;
+    ctrParams.dtDir = 'dwi_2nd';
+    ctrParams.roiDir = '/dwi_2nd/ROIs';
+    ctrParams.subs = subDir{k};
+    
+    % set parameter
+    ctrParams.roi1 = {'Rt-LGN4','Lt-LGN4','rh_MT_smooth3mm','lh_V1_smooth3mm'};
+    ctrParams.roi2 = {'rh_MT_smooth3mm','lh_MT_smooth3mm','lh_MT_smooth3mm','rh_V1_smooth3mm'};
+    ctrParams.nSamples = 30000;
+    ctrParams.maxNodes = 240;
+    ctrParams.minNodes = 30; % defalt: 10
+    ctrParams.stepSize = 1;
+    ctrParams.pddpdfFlag = 0;
+    ctrParams.wmFlag = 0;
+    ctrParams.oi1SeedFlag = 'true';
+    ctrParams.oi2SeedFlag = 'true';
+    ctrParams.multiThread = 0;
+    ctrParams.xecuteSh = 0;
+    
+    
+    %% Run ctrInitBatchTrack
+    [cmd, ~] = ctrInitBatchTrack(ctrParams);
+    % run conTrack
+    system(cmd);
+end
+
+
+
