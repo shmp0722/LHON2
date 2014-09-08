@@ -1,5 +1,16 @@
 function [roi]=fiberROI(fg, dt, outname)
+% This function returns fa values of fg ROI. 
+% 
+% EXAMPLE
+%
+% fg = fgRead('FG');
+% dt = 'dt6.mat' or dt = dtiLoad Dt6(dt);
+% outname = 'fg_FA';
+% [roi]=fiberROI(fg, dt, outname)
+% 
+% Shumpei Ogawa 2014
 
+%% argumenty check
 if isstr(fg);
 fg = dtiLoadFiberGroup(fg);
 end
