@@ -14,11 +14,9 @@ function [status, results, fg, pathstr] = SO_feTrack(trackingAlgorithm, dtFile,f
 %
 % Copyright Franco Pestilli (2013) Vistasoft Stanford University.
 if notDefined('trackingAlgorithm'), trackingAlgorithm = {'prob'};end
-if notDefined('dtFile'),            dtFile = ...
-    '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/JMD1-MM-20121025-DWI/dwi_2nd/dt6.mat';end
+if notDefined('dtFile'),            dtFile = [];end
 if notDefined('wmMask'),            wmMask  = [];end
-if notDefined('fibersFolder'),      fibersFolder = ...
-    '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/JMD1-MM-20121025-DWI/dwi_2nd/fibers/life_mrtrix';end
+if notDefined('fibersFolder'),      fibersFolder = [];end
 if notDefined('lmax'),              lmax    = [2];end
 if notDefined('nSeeds'),            nSeeds  = 500000; end
   
@@ -39,7 +37,7 @@ for il = 1:length(lmax)
   % MRTRIX - We run this first because it is fast.
   for ii = 1:length(trackingAlgorithm)
     % Track and save fibers using mrtrix
-    [status, results, fg, pathstr] = mrtrix_track(files, files.brainmask, files.wm, switchAlgo(trackingAlgorithm{ii}), nSeeds, runInBackground, verbose);
+    [status, results, fg, pathstr] = mrtrix_track(files, files.brainmask, files.wm, 'prob', nSeeds, runInBackground, verbose);
   end
 end
 
