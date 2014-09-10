@@ -1,13 +1,25 @@
 function ORfig_2
+% Figure 3 illustrates the OR, lgn and optic tract
+% ...
+%
+% Dependencies
+%    VISTASOFT
+%    AFQ
+%    LHON2
+%
+% SO Vistasoft lab, 2014
 
-% make good figure 2
+%% Identify the directories and subject types in the study
+% The full call can be
+%
+%  [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj;
+%
+[homeDir,subDir] = Tama_subj;
 
-[homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj;
+%% load fiber groups (fg) and ROI files
 
-
-%% load fg and ROI files
-% select the subject{i}
-i =23;
+% This selects a specific 
+i = 23;
 
 SubDir=fullfile(homeDir,subDir{i});
 ORfgDir = fullfile(SubDir,'/dwi_2nd/fibers');
@@ -22,7 +34,7 @@ cd(ORfgDir)
 fg1 = fgRead('RORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
 fg2 = fgRead('LORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
 
-% occipital callosal fiber
+%% occipital callosal fiber
 % cd(OCFfgDir)
 % fg3 = fgRead('OCF_fsCC_Ctr150_clean.pdb');
 
@@ -136,6 +148,6 @@ AFQ_RenderFibers(fg5, 'newfig', 0,'numfibers', 50 ,'color', [0.67,0.27,0.51],'ra
     % adjust view and give title
     view(0,89)
 
-
+%% End
 
 
