@@ -37,6 +37,8 @@ for il = 1:length(lmax)
   % MRTRIX - We run this first because it is fast.
   for ii = 1:length(trackingAlgorithm)
     % Track and save fibers using mrtrix
+%       [status, results, fg, pathstr] = mrtrix_track(files, files.brainmask, files.wm, switchAlgo(trackingAlgorithm{ii}), nSeeds, runInBackground, verbose);
+
     [status, results, fg, pathstr] = mrtrix_track(files, files.brainmask, files.wm, 'prob', nSeeds, runInBackground, verbose);
   end
 end
