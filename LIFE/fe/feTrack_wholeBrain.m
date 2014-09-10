@@ -3,6 +3,14 @@
 
   [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2;
 
+%% make sure directory organization
+  for i = 2:length(subDir);
+     % set directory
+    SubDir  = fullfile(homeDir,subDir{i});
+    fibersFolder   = fullfile(SubDir,'/dwi_2nd/fibers/life_mrtrix');
+    dtDir   = fullfile(SubDir,'dwi_2nd');   
+    cd(dtDir)
+
 %% Whole brain tractography
  for i = 2:length(subDir);
      % set directory
