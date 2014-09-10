@@ -1,30 +1,30 @@
-function Plot_Fig5
-% drow figure 4
+function Figure5_plot
+% Plot figure 5 showing individual FA value along the core of OR and optic tract.
+%
+% Repository dependencies
+%    VISTASOFT
+%    AFQ
+%    LHON2
+%
+% SO Vista lab, 2014
 %
 % Shumpei Ogawa 2014
 
-  [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2;
+%% Identify the directories and subject types in the study
+% The full call can be
+[~,subDir,~,CRD,LHON,Ctl,~] = Tama_subj2;
 
-%% Load TractProfile
+%% Load TractProfile data
+TPdata = fullfile('/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results/Tama2_TP_SD.mat');
+load(TPdata)
 
-cd('/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results');
-load Tama2_TP_SD.mat
+%% Figure 5A
+% indivisual FA value along optic tract
 
-%% classify all subjects intogroups
-fgN ={'ROR1206_D4L4.pdb','LOR1206_D4L4.pdb','ROTD4L4_1206.pdb','LOTD4L4_1206.pdb',...
-    'ROTD3L2_1206.pdb','LOTD3L2_1206.pdb'};
-
-% Render plots which comparing CRD ,LHON, Ctl
-% Y=nan(length(subDir),100);
-X = 1:100;
-c = lines(100);
-
-%% Figure5
-
-% take values of Optic tract
-fibID =3;%4:6 %ROR
+% take values
+fibID =3; %
 sdID = 1;%:7
-% make one sheet diffusivities
+% make one sheet diffusivity
 % merge both hemisphere
 for subID = 1:length(subDir);
     if isempty(TractProfile{subID,fibID}{sdID}.nfibers);
@@ -56,34 +56,37 @@ for subID = 1:length(subDir);
     end;
 end
 
- %% ANOVA
-    Ctl_fa =  fa(Ctl,:);
-    LHON_fa =  fa(LHON,:);
-    CRD_fa =  fa(CRD,:);
-    
-    for jj= 1: 100
-        pac = nan(14,3);
-        pac(:,1)= Ctl_fa(:,jj);
-        pac(1:6,2)= LHON_fa(:,jj);
-        pac(1:5,3)= CRD_fa(:,jj);
-        [p(jj),~,stats(jj)] = anova1(pac,[],'off');
-        co = multcompare(stats(jj),'display','off');
-        C{jj}=co;
-    end
-    
-    Portion =  p<0.01;
+%% ANOVA
+
+Ctl_fa =  fa(Ctl,:);
+LHON_fa =  fa(LHON,:);
+CRD_fa =  fa(CRD,:);
+
+for jj= 1: 100
+    pac = nan(14,3);
+    pac(:,1)= Ctl_fa(:,jj);
+    pac(1:6,2)= LHON_fa(:,jj);
+    pac(1:5,3)= CRD_fa(:,jj);
+    [p(jj),~,stats(jj)] = anova1(pac,[],'off');
+    co = multcompare(stats(jj),'display','off');
+    C{jj}=co;
+end
+
+Portion =  p<0.01;
 
 %% OT
-figure;
-subplot(2,2,1)
-hold on;
+figure; hold on;
+X = 1:100;
+c = lines(100);
+
+% put bars based on ANOVA (p<0.01)
 bar(1:100,Portion,1.0)
 
 % Control
 st = nanstd(fa(Ctl,:),1);
 m   = nanmean(fa(Ctl,:));
 
-% render area plot
+% render control subjects range
 A3 = area(m+2*st);
 A1 = area(m+st);
 A2 = area(m-st);
@@ -106,7 +109,7 @@ m   = nanmean(fa(CRD,:));
 plot(X,m,'Color',c(3,:) ,'linewidth',3)
 
 
-% add individual 
+% add individual
 for k = LHON %1:length(subDir)
     plot(X,fa(k,:),'Color',c(4,:),'linewidth',1);
 end
@@ -117,8 +120,8 @@ plot(X,m,'Color',c(4,:) ,'linewidth',3)
 % add label
 xlabel('Location','fontName','Times','fontSize',14);
 ylabel('Fractional anisotropy','fontName','Times','fontSize',14);
+title('Optic tract','fontName','Times','fontSize',14)
 axis([10, 90 ,0.0, 0.600001])
-
 
 %% OR
 fibID = 1;
@@ -152,34 +155,33 @@ for subID = 1:length(subDir);
     end;
 end
 
- %% ANOVA
-    Ctl_fa =  fa(Ctl,:);
-    LHON_fa =  fa(LHON,:);
-    CRD_fa =  fa(CRD,:);
-    
-    for jj= 1: 100
-        pac = nan(14,3);
-        pac(:,1)= Ctl_fa(:,jj);
-        pac(1:6,2)= LHON_fa(:,jj);
-        pac(1:5,3)= CRD_fa(:,jj);
-        [p(jj),~,stats(jj)] = anova1(pac,[],'off');
-        co = multcompare(stats(jj),'display','off');
-        C{jj}=co;
-    end
-    
-    Portion =  p<0.01;
-    k =  find(p<0.01);
+%% ANOVA
+Ctl_fa =  fa(Ctl,:);
+LHON_fa =  fa(LHON,:);
+CRD_fa =  fa(CRD,:);
+
+for jj= 1: 100
+    pac = nan(14,3);
+    pac(:,1)= Ctl_fa(:,jj);
+    pac(1:6,2)= LHON_fa(:,jj);
+    pac(1:5,3)= CRD_fa(:,jj);
+    [p(jj),~,stats(jj)] = anova1(pac,[],'off');
+    co = multcompare(stats(jj),'display','off');
+    C{jj}=co;
+end
+
+Portion =  p<0.01;
 %% OR
-subplot(2,2,2)
-hold on;
+figure; hold on;
+
+% put bars based on ANOVA (p<0.01)
 bar(1:100,Portion,1.0)
 
-
-% Control
+% Control subjects data
 st = nanstd(fa(Ctl,:),1);
 m   = nanmean(fa(Ctl,:));
 
-% render area plot
+% render control subjects range
 A3 = area(m+2*st);
 A1 = area(m+st);
 A2 = area(m-st);
@@ -191,9 +193,10 @@ set(A2,'FaceColor',[0.8 0.8 0.8],'linestyle','none')
 set(A3,'FaceColor',[0.8 0.8 0.8],'linestyle','none')
 set(A4,'FaceColor',[1 1 1],'linestyle','none')
 
+% plot mean value
 plot(m,'color',[0 0 0], 'linewidth',3)
 
-% add individual FA plot
+% individual FA
 for k = CRD %1:length(subDir)
     plot(X,fa(k,:),'Color',c(3,:),...
         'linewidth',1);
@@ -202,7 +205,7 @@ m   = nanmean(fa(CRD,:));
 plot(X,m,'Color',c(3,:) ,'linewidth',2)
 
 
-% add individual 
+% add individual plot
 for k = LHON %1:length(subDir)
     plot(X,fa(k,:),'Color',c(4,:),'linewidth',1);
 end
@@ -210,13 +213,10 @@ end
 m   = nanmean(fa(LHON,:));
 plot(X,m,'Color',c(4,:) ,'linewidth',2)
 
-% add label
+% add labels
 xlabel('Location','fontName','Times','fontSize',14);
 ylabel('Fractional anisotropy','fontName','Times','fontSize',14);
 axis([10, 90 ,0.2, 0.750001])
-
-% %% save figure
-% cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP/Figure5
-% print(gcf,'-depsc','Figure5(2)')
+title('Optic radiation','fontName','Times','fontSize',14)
 
 

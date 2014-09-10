@@ -1,20 +1,19 @@
-function Plot_Fig6
-%% set directory
-[homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2;
-
-%% Load TractProfile
-
-cd('/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results');
-load Tama2_TP_SD.mat
-
+function Figure6_plot
+% Plot figure 6 showing individual ad and rd value along the core of OR and optic tract.
 %
-fgN ={'ROR1206_D4L4.pdb','LOR1206_D4L4.pdb','ROTD4L4_1206.pdb','LOTD4L4_1206.pdb',...
-    'ROTD3L2_1206.pdb','LOTD3L2_1206.pdb'};
+% Repository dependencies
+%    VISTASOFT
+%    AFQ
+%    LHON2
+%
+% SO Vista lab, 2014
+%% Identify the directories and subject types in the study
+% The full call can be
+[~,subDir,~,CRD,LHON,Ctl,~] = Tama_subj2;
 
-% Render plots which comparing CRD ,LHON, Ctl
-% Y=nan(length(subDir),100);
-X = 1:100;
-c = lines(100);
+%% Load TractProfile data
+TPdata = fullfile('/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results/Tama2_TP_SD.mat');
+load(TPdata)
 
 %% Figure 6
 % take values of Optic tract
@@ -70,10 +69,11 @@ end
 %     Portion =  p<0.01;
 
 %% OT
+X = 1:100;
+c = lines(100);
+
 % AD
-figure;
-subplot(2,2,1)
-hold on;
+figure; hold on;
 % bar(1:100,Portion.*3,1.0)
 
 % Control
@@ -114,7 +114,8 @@ plot(X,m,'Color',[0 1 1] ,'linewidth',3)
 % add label
 xlabel('Location','fontName','Times','fontSize',14);
 ylabel('Axial diffusivity','fontName','Times','fontSize',14);
-axis([0, 100 ,0.7, 2.8])
+title('Optic tract','fontName','Times','fontSize',14);
+axis([10, 90 ,0.799999, 2.400001])
 
 %% RD  ANOVA
 %     Ctl_rd  =  rd(Ctl,:);
@@ -134,8 +135,7 @@ axis([0, 100 ,0.7, 2.8])
 %     Portion =  p<0.01;
 
 %% RD
-subplot(2,2,2)
-hold on;
+figure; hold on;
 % bar(1:100,Portion.*2.5, 1.0)
 
 % Control
@@ -175,7 +175,8 @@ plot(X,m,'Color',[0 1 1] ,'linewidth',3)
 % add label
 xlabel('Location','fontName','Times','fontSize',14);
 ylabel('Radial diffusivity','fontName','Times','fontSize',14);
-axis([0, 100 ,0.3, 2.2])
+title('Optic tract','fontName','Times','fontSize',14);
+axis([10, 90 ,0.299999, 1.700001])
 
 %% OR
 fibID = 1;
@@ -227,10 +228,8 @@ end
 %     Portion =  p<0.01;
 
 %% OR
-subplot(2,2,3)
-hold on;
+figure; hold on;
 % bar(1:100,Portion*2,1)
-
 
 % Control
 st = nanstd(ad(Ctl,:),1);
@@ -257,7 +256,6 @@ end
 m   = nanmean(ad(CRD,:));
 plot(X,m,'Color',c(3,:) ,'linewidth',2)
 
-
 % add individual 
 for k = LHON %1:length(subDir)
     plot(X,ad(k,:),'Color',[0 1 1],'linewidth',1);
@@ -269,7 +267,9 @@ plot(X,m,'Color',[0 1 1] ,'linewidth',2)
 % add label
 xlabel('Location','fontName','Times','fontSize',14);
 ylabel('Axial diffusivity','fontName','Times','fontSize',14);
-axis([0, 100, 0.9, 1.7])
+axis([10, 90, 0.89999, 1.70001])
+title('Optic radiation','fontName','Times','fontSize',14);
+
 
 %% RD  ANOVA
 %     Ctl_rd  =  rd(Ctl,:);
@@ -289,8 +289,7 @@ axis([0, 100, 0.9, 1.7])
 %     Portion =  p<0.01;
 
 %% RD
-subplot(2,2,4)
-hold on;
+figure; hold on;
 % bar(1:100,Portion.*2.5, 1.0)
 
 % Control
@@ -330,10 +329,9 @@ plot(X,m,'Color',[0 1 1] ,'linewidth',3)
 
 % add label
 xlabel('Location','fontName','Times','fontSize',14);
-ylabel('Ridial diffusivity','fontName','Times','fontSize',14);
-axis([0, 100 ,0.2, 0.9])
+ylabel('Radial diffusivity','fontName','Times','fontSize',14);
+axis([10, 90 ,0.3, 0.8])
+title('Optic radiation','fontName','Times','fontSize',14);
 
-% %% save figure
-% cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP/Figure6
-% print(gcf,'-depsc','Figure6(2)')
+%% End
 

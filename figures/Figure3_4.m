@@ -1,4 +1,4 @@
-function Fig3_4
+function Figure3_4
 % Create figures illustrating the OR, optic tract, FA on the these tracts,
 % and possibly the LGN position
 %
