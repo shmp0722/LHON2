@@ -7,8 +7,6 @@ function CompareDamagedRegion
 % crange = [- 0.3 0.3];
 % Save    = 1 or 0;
 
-
-
 % Set the path to data directory
 %% set directory
 AFQdata = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
@@ -42,11 +40,7 @@ subs = {...
     'RP3-TO-13120611-DWI'
     'LHON6-SS-20131206-DWI'
     'RP4-AK-2014-01-31'
-    'RP5-KS-2014-01-31'};        %% save the figures
-        cd '/biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP/Tama2'
-        print(gcf,'-dpng',sprintf('%s_%s_diffusion.png',subDir{k}(1:6),fgN{fibID}(2:3)));
-        print(gcf,'-depsc',sprintf('%s_%s_diffusion',subDir{k}(1:6),fgN{fibID}(2:3)));
-
+    'RP5-KS-2014-01-31'};        
 
 %% Load afq structure
 cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP

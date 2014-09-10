@@ -112,9 +112,7 @@ for id = [1,10,23];
     % selectt diffusion parameter
     
     vals = {'fa','md','ad','rd'};
-    portions = {'Center','ventral','Dorsal'};
-    
-    
+    portions = {'Center','ventral','Dorsal'};   
     
     
     for val = 1:length(vals)
