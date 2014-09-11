@@ -9,7 +9,7 @@ function CompareDamagedRegion
 
 % Set the path to data directory
 %% set directory
-AFQdata = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
 
 subs = {...
     'JMD1-MM-20121025-DWI'
