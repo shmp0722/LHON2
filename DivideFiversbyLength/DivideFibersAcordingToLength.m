@@ -30,19 +30,18 @@ subs = {...
     'RP1-TT-2013-11-01'
     'RP2-KI-2013-11-01'
     'RP3-TO-13120611-DWI'};
-%% cd and load afq structure
-
+%% load afq structure
 cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP
 load 3RP_1210.mat
 
-%% make save dir
+%% make directory
 for ii = 1:length(subs)
     
     newDir = fullfile(AFQdata,subs{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
     if ~exist(newDir); mkdir(newDir);end;
 end
 
-%% load fiber
+%% load fiber group
 % if isempty(subject); subject = 1:length(subs);end;
 for ii = 1%:length(subs)
     newDir = fullfile(AFQdata,subs{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
@@ -139,12 +138,7 @@ view(84,67.5)
     % Create axes
     axes1 = axes('Parent',figure1,'CLim',[-4 4]);
     hold(axes1,'all');
-    hold off;
- 
-    
-
-    
-    
+    hold off;    
     
     %%
     figure; hold on;

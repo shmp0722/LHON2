@@ -13,7 +13,7 @@ function RegionWhereisDamaged_for3RP(subject,diffusivity,test,crange,Save)
 %% set directory
 AFQdata = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
 
-subs = {...
+subDir = {...
     'JMD1-MM-20121025-DWI'
     'JMD3-AK-20121026-DWI'
     'JMD5-KK-20121220-DWI'
@@ -210,26 +210,24 @@ for ii = subject;  %1: size(afq.sub_dirs,2) % Subjects loop
     %             end
     % adjust view and give title
     view(0,89)
-    title(sprintf('%s %s %s E-C',subs{ii},test,diffusivity))
+    title(sprintf('%s %s %s E-C',subDir{ii},test,diffusivity))
     %            view(-108,90)
     
     axis image
     camlight('headlight');
 
     hold('off')
-    
-    
 
 
-%% save the figure in
-%        cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/RegionWhereisDamaged(.eps)
-%        print(gcf, '-depsc',sprintf('%s_%s_%s_%s_E_C.eps',subDir{ii},pathway,test,diffusivity))
-if Save == true;
-cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP/RegionWhrereisDamaged(fig)
-print(gcf, '-dpng',sprintf('%s_%s_%s_E_C.png',subs{ii},test,diffusivity))
-end
-%        close all;
-cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP
+% %% save the figure in
+% %        cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/RegionWhereisDamaged(.eps)
+% %        print(gcf, '-depsc',sprintf('%s_%s_%s_%s_E_C.eps',subDir{ii},pathway,test,diffusivity))
+% if Save == true;
+% cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP/RegionWhrereisDamaged(fig)
+% print(gcf, '-dpng',sprintf('%s_%s_%s_E_C.png',subs{ii},test,diffusivity))
+% end
+% %        close all;
+% cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP
 
 end
 return
