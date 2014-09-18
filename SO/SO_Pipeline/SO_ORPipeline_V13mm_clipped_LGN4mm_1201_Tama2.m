@@ -1,14 +1,4 @@
 function SO_ORPipeline_V13mm_clipped_LGN4mm_1201_Tama2
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% ctl HT does not have cerebellum segmentation file!
-% If you want to creat ROI which include cerebelum,
-% You should exclude HT, and create HT's ROI by hand.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % See also runSO_DivideFibersAcordingToFiberLength_percentile_Tama2
 
 
