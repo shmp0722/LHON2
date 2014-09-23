@@ -101,25 +101,3 @@ LHON = [10:14,27];
 Ctl = [16:23,31:33,35:37];
 RP = [24:26,28,29,34,38,39];
 
-% %%
-% i = 1:length(subDir);
-% 
-% SubDir = fullfile(homeDir,subDir{i});
-% fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped');
-% roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
-% dtDir  = fullfile(homeDir,subDir{i},'dwi_2nd');
-% 
-% % define
-% fg  = fullfile(fgDir,'');
-% roi = fullfile(roiDir,'');
-% dt  = fullfile(dtDir,'dt6.mat');
-% 
-% %% Argument checking
-% 
-% dt = dtiLoadDt6(dt);
-% 
-% fg = fgRead(fg);
-% 
-% roi = dtiReadRoi(roi);
-% 
-% return
