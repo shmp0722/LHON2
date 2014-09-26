@@ -1,4 +1,4 @@
-function matfile = Pdb2mat(fgname) 
+function Pdb2mat(fgname) 
 % change fiber .pdb file to .mat file
 % 
 fg = fgRead(fgname);

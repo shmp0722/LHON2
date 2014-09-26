@@ -1,6 +1,6 @@
 function TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight)
 %
-% TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight)
+% [TractProfile] = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight)
 %
 % Calculate diffusion properties along the tract and keep the result in
 % Tractprofile structure
@@ -11,7 +11,8 @@ function TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,
 % fiberdirection = 'AP','LR'or 'SI'
 % nodes =100;% default
 % weight = 1;
-% SO
+% 
+% SO @Vista lab 2014
 
 %% argument check
 if ~exist('Nnodes','var'); Nnodes = 100; end;
@@ -20,13 +21,10 @@ if ~exist('weight','var') || isempty(weight);
 if ~exist('fiberDirection','var') || isempty(fiberDirection);
     fiberDirection = 'AP';end
 
-
-% Align fiber direction
-% fgOrig = fg;
+%% Align fiber direction
 fg = SO_AlignFiberDirection(fg,fiberDirection);
 
-% Create Tract Profile structure
-
+%% Create Tract Profile structure
 % Pre allocate data arrays
 fa=nan(Nnodes,1);
 md=nan(Nnodes,1);
@@ -37,7 +35,7 @@ cs=nan(Nnodes,1);
 cp=nan(Nnodes,1);
 volume=nan(Nnodes,1);
 
-% get diffusion properties
+%% get diffusion properties
 [fa,md,rd,ad,cl,...
     SuperFibersGroup,~,cp,cs,fgResampled]=...
     dtiComputeDiffusionPropertiesAlongFG(fg, dt, [], [], Nnodes, weight);

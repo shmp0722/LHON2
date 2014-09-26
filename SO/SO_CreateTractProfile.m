@@ -1,7 +1,11 @@
 function TractProfile = SO_CreateTractProfile(varargin)
 % Create the AFQ Tract Profile structure
+% In addition to AFQ_CreateTractProfile, fiberLength added to this
+% function.
 %
-% TractProfile = AFQ_CreateTractProfile(varargin)
+% See also, AFQ_CreateTractProfile(varargin)
+%
+% SO
     
 %% Create the afq tract profile structure
 TractProfile.name    = 'name';

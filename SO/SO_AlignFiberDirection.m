@@ -4,23 +4,19 @@ function [fg] = SO_AlignFiberDirection(fg,direction)
 % dtiCleanFiber, dtiClipFiberGroupToROIs is also useful. 
 % But these two function don't remain pathinfo and remove the fiber dosent
 % touch both ROI. 
-% 
 %
 % Input
 % fg = fgRead(fgfile)
-% direction = 'LR','AP','SI' 
+% direction = 'LR','AP', or 'SI' 
 %
 % Example 
 % fg = fgRead(fgfile)
 % direction = 'LR'
 % [fg] = SO_AlignFiberDirection(fg,direction)
 %
-% SO 2013
+% SO@Vista lab 2013
 
-% %% argument check
-% if isempty(fg.fibers);sprintf('error check the number of fibers');
-% end;
-% 
+
 %% Align fiber direction
 switch direction
     case 'AP'

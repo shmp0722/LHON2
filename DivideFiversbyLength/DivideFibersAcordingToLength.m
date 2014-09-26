@@ -1,50 +1,25 @@
 function DivideFibersAcordingToLength
-%% runmbaComputeFiberLengthDistribution
+% This script will divide fibers based on fiber length.
 %
-AFQdata = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+%
+%% Set Tamagawa directory and subjects.
+ [homeDir,subDir] = Tama_subj;
 
-subs = {...
-    'JMD1-MM-20121025-DWI'
-    'JMD3-AK-20121026-DWI'
-    'JMD5-KK-20121220-DWI'
-    'JMD6-NO-20121220-DWI'
-    'JMD2-KK-20121025-DWI'
-    'JMD4-AM-20121026-DWI'
-    'JMD7-YN-20130621-DWI'
-    'JMD8-HT-20130621-DWI'
-    'JMD9-TY-20130621-DWI'
-    'LHON1-TK-20121130-DWI'
-    'LHON2-SO-20121130-DWI'
-    'LHON3-TO-20121130-DWI'
-    'LHON4-GK-20121130-DWI'
-    'LHON5-HS-20121220-DWI'
-    'LHON6-SS-20121221-DWI'
-    'JMD-Ctl-MT-20121025-DWI'
-    'JMD-Ctl-YM-20121025-DWI'
-    'JMD-Ctl-SY-20130222DWI'
-    'JMD-Ctl-HH-20120907DWI'
-    'JMD-Ctl-HT-20120907-DWI'
-    'JMD-Ctl-FN-20130621-DWI'
-    'JMD-Ctl-AM-20130726-DWI'
-    'JMD-Ctl-SO-20130726-DWI'
-    'RP1-TT-2013-11-01'
-    'RP2-KI-2013-11-01'
-    'RP3-TO-13120611-DWI'};
 %% load afq structure
 cd /biac4/wandell/biac3/wandell7/shumpei/matlab/git/LHON/3RP
 load 3RP_1210.mat
 
 %% make directory
-for ii = 1:length(subs)
+for ii = 1:length(subDir)
     
-    newDir = fullfile(AFQdata,subs{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
+    newDir = fullfile(homeDir,subDir{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
     if ~exist(newDir); mkdir(newDir);end;
 end
 
 %% load fiber group
 % if isempty(subject); subject = 1:length(subs);end;
 for ii = 1%:length(subs)
-    newDir = fullfile(AFQdata,subs{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
+    newDir = fullfile(homeDir,subDir{ii},'dwi_2nd','FiberLength','ROR1206_D4L4');
     
     % load dt6 file
     dt6 = AFQ_get(afq,'dt6path',ii);
@@ -184,7 +159,7 @@ end
     %% Clip orig V1 ROI at mean 
     for ii = 1 : length(afq.sub_dirs)
         %     for k = 21:22
-        RoiDir = fullfile(AFQdata,subs{ii},'/dwi_2nd/ROIs');
+        RoiDir = fullfile(homeDir,subDir{ii},'/dwi_2nd/ROIs');
         Roi ={'lh_V1.mat','rh_V1.mat'};
         for kk =  1:2
             
@@ -198,7 +173,7 @@ end
             [roiAnt, roiPost] = dtiRoiClip(roi2, [], apClip, []);
             
             % save
-            cd( fullfile(AFQdata,subs{ii},'/dwi_2nd/ROIs'))
+            cd( fullfile(homeDir,subDir{ii},'/dwi_2nd/ROIs'))
             dtiWriteRoi(roiPost, [roiPost.name(1:end-4),'_Center'])
             dtiWriteRoi(roiAnt, [roiAnt.name,'_Peri'])
             
