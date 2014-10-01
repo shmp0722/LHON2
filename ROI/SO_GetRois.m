@@ -20,7 +20,6 @@ function SO_GetRois(fsDir, subDir)
 % Never
 
 % Set directory
-
 [homeDir,subDir] = Tama_subj; 
 fsDir   = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/freesurfer';
 
@@ -62,13 +61,12 @@ for i = 1:length(subDir)
         nifti       = sprintf('%s.nii.gz',savefile);
         maskValue   = 0; % All nonZero values are used for the mask
         outFile     = sprintf('%s.mat',savefile);
-        outType     = 'mat';  binary = true; save = true;
+        outType     = 'mat';  binary = 1; save = 0;
         
         % run dtiRoiFromNifti and Save mat Roi in ROIs directory
-        roi = dtiRoiFromNifti(nifti,maskValue,outFile,outType,binary,0);
+        roi = dtiRoiFromNifti(nifti,maskValue,outFile,outType,binary,save);
         cd(matRoiDir)
-        dtiWriteRoi(roi,outfileName{ii})
-        
+        dtiWriteRoi(roi,outfileName{ii})  
         
     end
 end
@@ -156,7 +154,6 @@ for i =1:length(subDir);
         
     end
 end
-
 %% create V1,V2 ROI.mat from label file
 % If you finish fs_Autosegmentation. You already have V1,V2, and MT label file.
 % If you want to get other file. SEE: fs_annotationToLabelFiles.m
@@ -241,8 +238,7 @@ end
 for i = 1:length(subDir)  % 3 imcomplete
 
     % directory   
-    RoiDir = fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs');
-       
+    RoiDir = fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs');       
     lh_V1roi =fullfile(RoiDir,'lh_V1_smooth3mm.mat');
     rh_V1roi =fullfile(RoiDir,'rh_V1_smooth3mm.mat');
 
@@ -257,11 +253,11 @@ for i = 1:length(subDir)  % 3 imcomplete
     
     % dtiRoiClip
     apClip=[-120 -60];
-    [lh_V1roi, roi5Not] = dtiRoiClip(lh_V1roi, [], apClip, []);
-    dtiWriteRoi(roi5Not, roi5Not.name)
+    [~, lh_V1roi] = dtiRoiClip(lh_V1roi, [], apClip, []);
+    dtiWriteRoi(lh_V1roi, lh_V1roi.name)
     
-    [rh_V1roi, roi6Not] = dtiRoiClip(rh_V1roi, [], apClip, []);
-    dtiWriteRoi(roi6Not, roi6Not.name)
+    [~, rh_V1roi] = dtiRoiClip(rh_V1roi, [], apClip, []);
+    dtiWriteRoi(rh_V1roi, rh_V1roi.name)
     
 end
 %% lets remove V1_smooth 3mm_NOT from cerebral cortex
