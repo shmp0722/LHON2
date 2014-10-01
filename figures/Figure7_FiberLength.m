@@ -1,5 +1,6 @@
 function Figure7_FiberLength
-% Plot figure 6 showing individual ad and rd value along the core of OR and optic tract.
+% Plot figure 7 showing individual ad and rd value along the core of OR and
+% optic tract. 
 %
 % Repository dependencies
 %    VISTASOFT
@@ -10,8 +11,9 @@ function Figure7_FiberLength
 %% Identify the directories and subject types in the study
 % The full call can be
 [~,subDir,~,CRD,LHON,Ctl,~] = Tama_subj2;
+
 %% Load TractProfile
-load /biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results/Tama2_Percentile.mat
+load(fullfile(Tama_subj2,'results','Tama2_Percentile.mat'))
 
 %%
 

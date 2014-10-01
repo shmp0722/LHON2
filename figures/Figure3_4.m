@@ -30,20 +30,19 @@ dt6 =fullfile(SubDir,'/dwi_2nd/dt6.mat');
 
 % Load fiber groups
 % Optic radiation
-cd(ORfgDir)
-fgrOR = fgRead('RORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
-fglOR = fgRead('LORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
+fName = fullfile(ORfgDir,'RORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
+fgrOR = fgRead(fName);
+fName = fullfile(ORfgDir,'LORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
+fglOR = fgRead(fName);
 
 % occipital callosal fiber
 % cd(OCFfgDir)
 % fg3 = fgRead('OCF_fsCC_Ctr150_clean.pdb');
 
 % Optic tract
-cd(dirOTfg)
-fglOT = 'fg_OT_5K_Optic-Chiasm_Lt-LGN4_2013-08-29_22.32.30-Right-Cerebral-White-Matter_Ctrk100_AFQ_92.pdb';
+fglOT = fullfile(dirOTfg,'fg_OT_5K_Optic-Chiasm_Lt-LGN4_2013-08-29_22.32.30-Right-Cerebral-White-Matter_Ctrk100_AFQ_92.pdb');
 fglOT = fgRead(fglOT);
-
-fgrOT = 'fg_OT_5K_Optic-Chiasm_Rt-LGN4_2013-08-29_22.32.30-Left-Cerebral-White-Matter_Ctrk100_AFQ_91.pdb';
+fgrOT = fullfile(dirOTfg,'fg_OT_5K_Optic-Chiasm_Rt-LGN4_2013-08-29_22.32.30-Left-Cerebral-White-Matter_Ctrk100_AFQ_91.pdb');
 fgrOT = fgRead(fgrOT);
 
 FG = {fgrOR , fglOR, fglOT, fgrOT};
@@ -119,8 +118,10 @@ t1 = niftiRead(dt.files.t1);
 AFQ_AddImageTo3dPlot(t1, [0, 0, -30]);
 
 axis image, axis off, view(0,89)
-colorbar('location','eastoutside');
+cb = colorbar('location','eastoutside');
 caxis([0.3 0.7])
+T = get(cb,'Title'); set(T,'string','FA','FontSize',14);
+
 
 %% Fig4 C
 % Fa values averaged along tracts
