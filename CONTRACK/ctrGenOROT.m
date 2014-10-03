@@ -1,33 +1,32 @@
-function SO_ctrOR_OT(homeDir, subjDir,numfib_OR, numfib_OT)
-% To identify optic radiation and optic tract using Multi-Subject cnotrack
+function ctrGenOROT
+% To identify optic radiation and optic tract using Multi-subDirect cnotrack
 % tractography
-%
 %
 % SO@Vista lab 2014
 
+
 %%
-cd(homeDir)
-subjDir;
+  [homeDir,subDir] = Tama_subDir;
 
 %% Optic Radiation
 % Set Params for contrack fiber generation
 
-%
+% Create params structure
 ctrParams = ctrInitBatchParams;
-
+% params
 ctrParams.projectName = 'OR_Top100K_V1_3mm_clipped_LGN4mm';
 ctrParams.logName = 'myConTrackLog';
-ctrParams.baseDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+ctrParams.baseDir = homeDir;
 ctrParams.dtDir = 'dwi_2nd';
 ctrParams.roiDir = '/dwi_2nd/ROIs';
-ctrParams.subs = subJ;
+ctrParams.subs = subDir;
 
 % set parameter
 ctrParams.roi1 = {'Lt-LGN4','Rt-LGN4'};
 ctrParams.roi2 = {'lh_V1_smooth3mm_NOT','rh_V1_smooth3mm_NOT'};
 ctrParams.nSamples = 100000;
 ctrParams.maxNodes = 240;
-ctrParams.minNodes = 10; % defalt: 10
+ctrParams.minNodes = 50; % defalt: 10
 ctrParams.stepSize = 1;
 ctrParams.pddpdfFlag = 0;
 ctrParams.wmFlag = 0;
@@ -37,35 +36,28 @@ ctrParams.multiThread = 0;
 ctrParams.xecuteSh = 0;
 
 
-%% Run ctrInitBatchTrack
-%
-[cmd infofile] = ctrInitBatchTrack(ctrParams);
-
-
-%% run conTrack
+%% Generate OR usinig Sherbondy's contrack
+[cmd, ~] = ctrInitBatchTrack(ctrParams);
 system(cmd);
-
-
-%% Optic Tract 5K
-
+clear ctrParams
+%% Optic Tract
 % Create params structure
 ctrParams = ctrInitBatchParams;
 
-% 
-ctrParams.projectName = projectName;
+% set params
+ctrParams.projectName = 'OpticTract_5K';
 ctrParams.logName = 'myConTrackLog';
-ctrParams.baseDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+ctrParams.baseDir = homeDir;
 ctrParams.dtDir = 'dwi_2nd';
 ctrParams.roiDir = '/dwi_2nd/ROIs';
-ctrParams.subs = subJ;
-
+ctrParams.subs = subDir;
 
 % set parameter
 ctrParams.roi1 = {'Optic-Chiasm','Optic-Chiasm'};
 ctrParams.roi2 = {'Rt-LGN4','Lt-LGN4'};
-ctrParams.nSamples = 5000;
-ctrParams.maxNodes = 240;
-ctrParams.minNodes = 10;
+ctrParams.nSamples = 5000;  % number of fibers 
+ctrParams.maxNodes = 240;   % longest fiber length(mm) 
+ctrParams.minNodes = 20;    % shortest fiber length(mm) 
 ctrParams.stepSize = 1;
 ctrParams.pddpdfFlag = 0;
 ctrParams.wmFlag = 0;
@@ -74,26 +66,19 @@ ctrParams.oi2SeedFlag = 'true';
 ctrParams.multiThread = 0;
 ctrParams.xecuteSh = 0;
 
-
-%% Run ctrInitBatchTrack
-%
-%
-[cmd infofile] = ctrInitBatchTrack(ctrParams);
-
+%% generate optic tract
+[cmd, ~] = ctrInitBatchTrack(ctrParams);
 system(cmd);
-
+clear ctrParams
 %% OCF from LH to RH
-% Set ctrInitBatchParams
-%
-%
 ctrParams = ctrInitBatchParams;
 
-ctrParams.projectName = 'OCF_Top50K_fsV1V2_3mm';
+ctrParams.projectName = 'OCF_Top50K';
 ctrParams.logName = 'myConTrackLog';
-ctrParams.baseDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+ctrParams.baseDir = homeDir;
 ctrParams.dtDir = 'dwi_2nd';
 ctrParams.roiDir = '/dwi_2nd/ROIs';
-ctrParams.subs = subJ;
+ctrParams.subs = subDir;
 
 % set parameter
 ctrParams.roi1 = {'lh_V1_smooth3mm_lh_V2_smooth3mm'};
@@ -109,33 +94,24 @@ ctrParams.oi2SeedFlag = 'true';
 ctrParams.multiThread = 0;
 ctrParams.xecuteSh = 0;
 
-% ctrInitBatchTrack
-[cmd infofile] = ctrInitBatchTrack(ctrParams);
-
 %% Run ctrInitBatchTrack
-
+[cmd, ~] = ctrInitBatchTrack(ctrParams);
 system(cmd);
-
+clear ctrParams
 %% OCF CC to bothe V1+V2
 % Set ctrInitBatchParams
-%
-%
 ctrParams = ctrInitBatchParams;
 
-ctrParams.projectName = 'OCF_Top50K_fsCC_V1V2_3mm';
+ctrParams.projectName = 'OCF_Top50K_fsCC_V1V2';
 ctrParams.logName = 'myConTrackLog';
-ctrParams.baseDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan';
+ctrParams.baseDir = homeDir;
 ctrParams.dtDir = 'dwi_2nd';
 ctrParams.roiDir = '/dwi_2nd/ROIs';
-ctrParams.subs = subJ;
+ctrParams.subs = subDir;
 
 % set parameter
 ctrParams.roi1 = {'fs_CC','fs_CC'};
 ctrParams.roi2 = {'rh_V1_smooth3mm_rh_V2_smooth3mm','lh_V1_smooth3mm_lh_V2_smooth3mm'};
-
-%     ctrParams.roi1 = {'CC','CC'};
-%     ctrParams.roi2 = {'lh_V1_smooth3mm_lh_V2_smooth3mm','rh_V1_smooth3mm_rh_V2_smooth3mm'};
-
 ctrParams.nSamples = 50000;
 ctrParams.maxNodes = 240;
 ctrParams.minNodes = 10;
@@ -149,10 +125,10 @@ ctrParams.xecuteSh = 0;
 
 
 %% Run ctrInitBatchTrack
-%
-%
-[cmd infofile] = ctrInitBatchTrack(ctrParams);
-
+[cmd, ~] = ctrInitBatchTrack(ctrParams);
 system(cmd);
+clear ctrParams
+
+end
 
 
