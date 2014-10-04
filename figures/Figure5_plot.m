@@ -57,7 +57,6 @@ for subID = 1:length(subDir);
 end
 
 %% ANOVA
-
 Ctl_fa =  fa(Ctl,:);
 LHON_fa =  fa(LHON,:);
 CRD_fa =  fa(CRD,:);
@@ -71,8 +70,7 @@ for jj= 1: 100
     co = multcompare(stats(jj),'display','off');
     C{jj}=co;
 end
-
-Portion =  p<0.01;
+Portion =  p<0.01; % where is most effected
 
 %% OT
 figure; hold on;

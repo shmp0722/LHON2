@@ -1,5 +1,5 @@
 function [TractProfile, fg_SDm3,fg_SDm2,fg_SDm1,fg_SD1,fg_SD2,fg_SD3]...
-    = SO_DivideFiber3SDLength(fg,dt,distribution,direction,Nodes)
+    = SO_DivideFiber3SDLength(fg,dt,show,direction,Nodes)
 % This function will divide the fascicle into 7groups according to fiber
 % length (standard deviation from -3 to 3, and orinal fascicle) and return
 % difusion properties along with these fascicles with Tractprofile structure
@@ -7,7 +7,7 @@ function [TractProfile, fg_SDm3,fg_SDm2,fg_SDm1,fg_SD1,fg_SD2,fg_SD3]...
 % Example
 % fg = fgRead('fg'); % or fullpath
 % dt =  dtiLoadDt6(dt);
-% distribution = 1 ;% show original fiber length distribution histgraph
+% show = 1 ;% show original fiber length distribution histgraph
 % direction = 'AP', 'LR', or 'SI'; % align fiber direction
 % Nodes =100;
 
@@ -22,7 +22,7 @@ fg_orig = fg;
 
 % First classfy fibers according to length
 % take fiber distribution 
-Lnorm     = AFQ_FiberLengthHist(fg_orig,distribution);
+Lnorm     = AFQ_FiberLengthHist(fg_orig,show);
 % divide
 SD_m3 =  Lnorm < -2 ;
 SD_m2 =  Lnorm < -1 & Lnorm >= -2;

@@ -36,18 +36,11 @@ function [TractProfile, fg_20,fg_40,fg_60,fg_80,fg_100]...
     c = Lmm<x(4) & Lmm>=x(3);
     d = Lmm<x(5) & Lmm>=x(4);
     e = Lmm<=x(6) & Lmm>=x(5);
-
-%     a = Lmm(Lmm<x(2));
-%     b = Lmm( Lmm<x(3) & Lmm>=x(2));
-%     c = Lmm( Lmm<x(4) & Lmm>=x(3));
-%     d = Lmm( Lmm<x(5) & Lmm>=x(4));
-%     e = Lmm( Lmm<=x(6) & Lmm>=x(5));
-
-    %%
+    
+    %% draw histgraph if you want
     if showHist==1
-
     figure;hold on;
-    [n xout]=hist(Lmm,20);
+    [n, xout]=hist(Lmm,20);
     bar(xout,n,'FaceColor','b','EdgeColor','k');
     axis([min(xout) max(xout) 0 max(n)]);
     xlabel('Fiber Length (mm)');
@@ -57,16 +50,7 @@ function [TractProfile, fg_20,fg_40,fg_60,fg_80,fg_100]...
     plot([x(4) x(4)],[0 max(n)],'--r');
     plot([x(5) x(5)],[0 max(n)],'--r');
     end
-    
-%     %%
-% %     SD_m4 = Lnorm < -3 ;
-%     SD_m3 =  Lnorm < -2 ;
-%     SD_m2 =  Lnorm < -1 & Lnorm >= -2;
-%     SD_m1 =  Lnorm < 0 & Lnorm >= -1;
-%     SD_1p  = Lnorm < 1 & Lnorm >= 0;
-%     SD_2p  = Lnorm < 2 & Lnorm >= 1;
-%     SD_3p   = Lnorm >= 2;
-    
+        
     %% creat new fibers     
     if sum(a) <5;a =[];
     else
@@ -92,12 +76,12 @@ function [TractProfile, fg_20,fg_40,fg_60,fg_80,fg_100]...
     fgF = {fg, fg_20,fg_40,fg_60,fg_80,fg_100};
    
       
-%% let's get diffusivities 
+%% calicurate diffusivities 
 for jj =1:length(fgF)
 %     direction ='AP';
 %     Nodes =100;
     if isempty(fgF{jj});
-        TractProfile{jj}= AFQ_CreateTractProfile;
+        TractProfile{jj} = AFQ_CreateTractProfile;
     else
         TractProfile{jj} = SO_FiberValsInTractProfiles(fgF{jj},dt,direction,Nodes,1);
     end

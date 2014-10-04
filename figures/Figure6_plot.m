@@ -16,7 +16,7 @@ TPdata = fullfile('/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan2/results
 load(TPdata)
 
 %% Figure 6
-% take values of Optic tract
+% take values from TractProfile structure
 fibID =3;%4:6 %ROR
 sdID = 1;%:7
 % make one sheet diffusivities
@@ -51,24 +51,7 @@ for subID = 1:length(subDir);
     end;
 end
 
-%% AD ANOVA
-%     Ctl_ad  =  ad(Ctl,:);
-%     LHON_ad =  ad(LHON,:);
-%     CRD_ad  =  ad(CRD,:);
-%     
-%     for jj= 1: 100
-%         pac = nan(14,3);
-%         pac(:,1)= Ctl_ad(:,jj);
-%         pac(1:6,2)= LHON_ad(:,jj);
-%         pac(1:5,3)= CRD_ad(:,jj);
-%         [p(jj),~,stats(jj)] = anova1(pac,[],'off');
-%         co = multcompare(stats(jj),'display','off');
-%         C{jj}=co;
-%     end
-%     
-%     Portion =  p<0.01;
-
-%% OT
+%% Optic tracrt
 X = 1:100;
 c = lines(100);
 
@@ -91,7 +74,7 @@ set(A1,'FaceColor',[0.6 0.6 0.6],'linestyle','none')
 set(A2,'FaceColor',[0.8 0.8 0.8],'linestyle','none')
 set(A3,'FaceColor',[0.8 0.8 0.8],'linestyle','none')
 set(A4,'FaceColor',[1 1 1],'linestyle','none')
-
+% add avarage
 plot(m,'color',[0 0 0], 'linewidth',3 )
 
 % add individual FA plot
