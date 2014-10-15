@@ -15,11 +15,10 @@ function Figure7_FiberLength
 %% Load TractProfile
 load(fullfile(Tama_subj2,'results','Tama2_Percentile.mat'))
 
-%%
-
-X = 1:100;
-c = lines(100);
 %% plot
+X = 1:100; %$ number of  nodes
+c = lines(100); % line colors
+
 figure; hold on;
 for fibID = 1
     for pctl = 2:6
