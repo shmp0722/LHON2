@@ -19,7 +19,7 @@ load(TPdata)
 % take values from TractProfile structure
 fibID =3;%4:6 %ROR
 sdID = 1;%:7
-% make one sheet diffusivities
+% make one diffusivities value sheet
 % merge both hemisphere
 for subID = 1:length(subDir);
     if isempty(TractProfile{subID,fibID}{sdID}.nfibers);
@@ -52,8 +52,8 @@ for subID = 1:length(subDir);
 end
 
 %% Optic tracrt
-X = 1:100;
-c = lines(100);
+X = 1:100;      % noumber of nodes
+c = lines(100); % line colors
 
 % AD
 figure; hold on;
