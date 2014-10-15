@@ -1,8 +1,8 @@
 function [fg] = SO_AlignFiberDirection(fg,direction)
 % We have to correct the direction of each fg.fiber in your facicle before
-% caliculate diffusivities along teract
+% caliculate diffusivities along the tract
 % dtiCleanFiber, dtiClipFiberGroupToROIs is also useful. 
-% But these two function don't remain pathinfo and remove the fiber dosent
+% But these two function don't remain pathwayinfo field and remove the fiber dosent
 % touch both ROI. 
 %
 % Input
