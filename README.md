@@ -1,6 +1,10 @@
 LHON2
 =====
-This repository contains the scripts that Shumpei Ogawa wrote for his paper analyzing the properties of brain white matter in subjects with retinal diseases. The analysis is currently under review for publication.
+This repository contains the scripts that Shumpei Ogawa wrote for his paper analyzing the properties of brain white matter in subjects with retinal diseases. 
+
+If you use this codes please cite the relevant manuscripts describing the work:
+
+Ogawa, Shumpei, et al. "White matter consequences of retinal receptor and ganglion cell damage." Investigative ophthalmology & visual science (2014): IOVS-14.
 
 The scripts here depend on functions in two other repositories related to the Vistalab.
   * AFQ - Automated Fiber Quantification
