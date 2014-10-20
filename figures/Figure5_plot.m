@@ -72,7 +72,7 @@ for jj= 1: 100
 end
 Portion =  p<0.01; % where is most effected
 
-%% OT
+%% Optic Tract
 figure; hold on;
 X = 1:100;
 c = lines(100);
