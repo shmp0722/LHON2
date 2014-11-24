@@ -1,5 +1,5 @@
 function SO_GetRois
-% This function return ROIs.mat to generate optic tracty and optic radiation
+% This function return ROIs.mat to generate optic tract and optic radiation
 % using conTrack.
 %
 % Requires; freesurfer segmentation files

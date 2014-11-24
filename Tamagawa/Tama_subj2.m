@@ -1,4 +1,4 @@
-function [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2
+function [homeDir,subDir,JMD,CRD,LHON,Ctl,RP,Ctl2] = Tama_subj2
 %
 % [homeDir,subDir,JMD,CRD,LHON,Ctl,RP] = Tama_subj2;
 %
@@ -45,7 +45,13 @@ subDir = {...
     'Ctl-13-MW-20140313-dMRI-Anatomy'
     'Ctl-14-YM-20140314-dMRI-Anatomy'
     'RP7-EU-2014-03-14-dMRI-Anatomy'
-    'RP8-YT-2014-03-14-dMRI-Anatomy'};
+    'RP8-YT-2014-03-14-dMRI-Anatomy'
+     'AMD-Ctl01-HM-dMRI-Anatomy-2014-09-09'
+    'AMD-Ctl02-YM-dMRI-Anatomy-2014-09-09'
+    'AMD-Ctl03-TS-dMRI-Anatomy-2014-10-28'
+    'MasahikoTerao-dMRI-2014-10-28'
+    'ShoyoYoshimine-dMRI-2014-10-28'
+    'YoichiroMasuda-dMRI-2014-10-28'};
 
 %% classify all subjects intogroups
 JMD = 1:4;
@@ -53,5 +59,6 @@ CRD = 5:9;
 % LHON = 10:15;
 LHON = [10:14,27];
 
-Ctl = [16:23,31:33,35:37];
+Ctl = [16:23,31:33,35:37,40:42];
+Ctl2= [ 43:45];
 RP = [24:26,28,29,34,38,39];
