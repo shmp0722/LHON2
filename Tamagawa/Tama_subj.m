@@ -96,13 +96,14 @@ subDir = {...
     'AMD-Ctl03-TS-dMRI-Anatomy-2014-10-28'
     'MasahikoTerao-dMRI-2014-10-28'
     'ShoyoYoshimine-dMRI-2014-10-28'
-    'YoichiroMasuda-dMRI-2014-10-28'};
+    'YoichiroMasuda-dMRI-2014-10-28'
+    'LHON4-GK-dMRI-2014-11-25'};
 
 %% classify all subjects intogroups
 JMD = 1:4;
 CRD = 5:9;
 % LHON = 10:15;
-LHON = [10:14,27];
+LHON = [10:14,27,43];
 
 Ctl  = [16:23,31:33,35:37,40:42];
 Ctl2 = [43:45];
