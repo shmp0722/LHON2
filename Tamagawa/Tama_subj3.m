@@ -10,17 +10,17 @@ subDir = {...
     'AMD-Ctl01-HM-dMRI-Anatomy-2014-09-09'
     'AMD-Ctl02-YM-dMRI-Anatomy-2014-09-09'
     'AMD-Ctl03-TS-dMRI-Anatomy-2014-10-28'
-    'MasahikoTerao-dMRI-2014-10-28'
-    'ShoyoYoshimine-dMRI-2014-10-28'
-    'YoichiroMasuda-dMRI-2014-10-28'
+    'AMD-Ctl04-AO-61yo-dMRI-Anatomy'
+    'AMD-Ctl05-TM-71yo-dMRI-Anatomy'
+    'AMD-Ctl06-YM-66yo-dMRI-Anatomy'
+    'AMD-Ctl07-MS-61yo-dMRI-Anatomy'
+    'AMD-Ctl08-HO-62yo-dMRI-Anatomy'
+    'AMD-Ctl09-KH-70yo-dMRI-Anatomy-dMRI'
+    'AMD-Ctl10-TH-65yo-dMRI-Anatomy-dMRI'
+    'JMD-Ctl05-MT-20141028-DWI'
+    'JMD-Ctl07-SY-20141028-DWI'
+    'JMD-Ctl14-YM-20141028-DWI'
+    'JMD-Ctl05-MT-20141028-DWI'
+    'JMD-Ctl07-SY-20141028-DWI'
+    'JMD-Ctl14-YM-20141028-DWI'
     'LHON4-GK-dMRI-2014-11-25'};
-
-% %% classify all subjects intogroups
-% JMD = 1:4;
-% CRD = 5:9;
-% % LHON = 10:15;
-% LHON = [10:14,27];
-% 
-% Ctl = [1:6];
-% RP = [24:26,28,29,34,38,39];
-

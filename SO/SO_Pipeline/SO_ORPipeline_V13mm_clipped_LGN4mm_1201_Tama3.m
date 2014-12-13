@@ -7,13 +7,13 @@ function SO_ORPipeline_V13mm_clipped_LGN4mm_1201_Tama3(id,ROI)
 
 %% make new directory
 if ROI==true;
-    for i = id
-        
-        SubDir = fullfile(homeDir,subDir{i});
-        
-        mkdir(fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_1130'))
-        
-    end
+%     for i = id
+%         
+%         SubDir = fullfile(homeDir,subDir{i});
+%         
+%         mkdir(fullfile(SubDir,'/dwi_2nd/fibers/conTrack'))
+%         
+%     end
     
     % make NOT ROI
     for i = id
@@ -26,19 +26,18 @@ if ROI==true;
             if i<22
                 switch(hemisphere)
                     case  1 % Left-WhiteMatter
-                        roiname = {...'Brain-Stem',...
-                            'Right-Cerebellum-White-Matter'
-                            'Right-Cerebellum-Cortex'
-                            'Left-Cerebellum-White-Matter'
-                            'Left-Cerebellum-Cortex'
-                            'Left-Hippocampus'
-                            'Right-Hippocampus'
-                            'Left-Lateral-Ventricle'
-                            'Right-Lateral-Ventricle'
-                            'Left-Cerebral-White-Matter'};
-                        %                         'Right-Cerebral-Cortex_V13mm_setdiff.mat'};
+                        roiname = {...
+                            '*Right-Cerebellum-White-Matter*'
+                            '*Right-Cerebellum-Cortex*'
+                            '*Left-Cerebellum-White-Matter'
+                            '*Left-Cerebellum-Cortex'
+                            '*Left-Hippocampus'
+                            '*Right-Hippocampus'
+                            '*Left-Lateral-Ventricle'
+                            '*Right-Lateral-Ventricle'
+                            '*Left-Cerebral-White-Matter'};
                     case 2 % Right-WhiteMatter
-                        roiname = {...'Brain-Stem',...
+                        roiname = {...
                             'Right-Cerebellum-White-Matter'
                             'Right-Cerebellum-Cortex'
                             'Left-Cerebellum-White-Matter'
@@ -47,8 +46,7 @@ if ROI==true;
                             'Right-Hippocampus'
                             'Left-Lateral-Ventricle'
                             'Right-Lateral-Ventricle'
-                            'Right-Cerebral-White-Matter'};
-                        %                         'Left-Cerebral-Cortex_V13mm_setdiff.mat'};
+                            'Right-Cerebral-White-Matter'};                        
                 end
             else
             end

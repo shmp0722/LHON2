@@ -61,15 +61,16 @@ for i = id
     end
 end
 
+
 %% Create ROI.mat from aparc+aseg.nii.gz
 for i =id;
     roiDir =fullfile(homeDir,subDir{i},'dwi_2nd','ROIs');
     % aparc+aseg.nii.gz
     fsIn =fullfile(fsDir,subDir{i},'mri/aparc+aseg.nii.gz');
     % take label name from LUT
-%     labelVal = [ 2 4 7 8 9 10 12 16 17 24 41 43 46 47 48 49 51 53 85 219 220 251 252 253 254 255]; 
+    labelVal = [ 2 4 7 8 9 10 12 16 17 24 41 43 46 47 48 49 51 53 85 219 220 251 252 253 254 255]; 
 %     labelVal = [ 2 4 7 8 9 16 17 24 43 46 47 48 49 51 53 85 219 220 251 252 253 254 255]; % 10, 12, 41
-        labelVal = [ 2 41]; 
+%         labelVal = [ 2 41]; 
 
     for ii = 1:length(labelVal);
         % nifti ROI
