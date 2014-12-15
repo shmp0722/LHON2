@@ -54,13 +54,15 @@ if ROI,
                 end
             end
             
-            % Merge all rois
+            % Merge ROI one by one
             newROI = roi{1,1};
             for kk=2:length(roiname)
                 newROI = dtiMergeROIs(newROI,roi{1,kk});
             end
             
-            % name            
+            % Save the new NOT ROI
+            % define file name
+            
             switch(hemisphere)
                 case 1 % Left-WhiteMatter
                     newROI.name = 'Lh_NOT1201';
