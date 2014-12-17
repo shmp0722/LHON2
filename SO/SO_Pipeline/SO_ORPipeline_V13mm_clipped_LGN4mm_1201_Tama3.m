@@ -1,4 +1,4 @@
-function SO_ORPipeline_V13mm_clipped_LGN4mm_1201_Tama3(id,ROI)
+function SO_ORPipeline_V13mm_clipped_LGN4mm_1201_Tama3(id,ROI,show)
 %
 % clean optic radiation based on anatomical locatino information. The way
 % point rois are provided from freesurfer.
@@ -39,7 +39,7 @@ if ROI,
                         '*_Left-Lateral-Ventricle*'
                         '*_Right-Lateral-Ventricle*'
                         '*_Right-Cerebral-White-Matter*'};
-            end            
+            end
             
             % load all ROIs
             for j = 1:length(roiname)
@@ -60,7 +60,7 @@ if ROI,
                 newROI = dtiMergeROIs(newROI,roi{1,kk});
             end
             
-            % name            
+            % name
             switch(hemisphere)
                 case 1 % Left-WhiteMatter
                     newROI.name = 'Lh_NOT1201';
@@ -68,7 +68,7 @@ if ROI,
                     newROI.name = 'Rh_NOT1201';
             end
             % Save Roi
-            dtiWriteRoi(newROI,newROI.name,1)
+            dtiWriteRoi(newROI,fullfile(roiDir,newROI.name),1)
         end
     end
     
@@ -95,10 +95,10 @@ for i = id % 22
         % pick up waypoint roi for each hemsphere
         ROIname = {'Lh_NOT1201.mat','Rh_NOT1201.mat'};
         ROIf = fullfile(roiDir, ROIname{hemisphere});
-        ROI = dtiReadRoi(ROIf);
+        roi = dtiReadRoi(ROIf);
         
         % dtiIntersectFibers
-        [fgOut1,~, keep1, ~] = dtiIntersectFibersWithRoi([], 'not', [], ROI, fg);
+        [fgOut1,~, keep1, ~] = dtiIntersectFibersWithRoi([], 'not', [], roi, fg);
         keep = ~keep1;
         for l =1:length(fgOut1.params)
             fgOut1.params{1,l}.stat=fgOut1.params{1,l}.stat(keep);
@@ -132,124 +132,37 @@ for i = id % 22
         % save new fg.pdb file
         switch hemisphere
             case {1}
-                fibername       = sprintf('ROR_%dL%d.pdb',maxDist,maxLen);
+                fibername       = sprintf('ROR_D%dL%d.pdb',maxDist,maxLen);
             case {2}
-                fibername       = sprintf('LOR_%dL%d.pdb',maxDist,maxLen);
+                fibername       = sprintf('LOR_D%dL%d.pdb',maxDist,maxLen);
         end
         mtrExportFibers(fgclean,fullfile(fgDir,fibername),[],[],[],2);
     end
 end
-% %% check fg look
-% for i =id
-%     SubDir = fullfile(homeDir,subDir{i});
-%     %     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
-%     newDir = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_1130');
-%     %     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
-%     %     dtDir  = fullfile(homeDir,subDir{i},'dwi_2nd');
-%
-%     cd(newDir)
-%     % get .pdb filename
-%     ORf = dir('*_D4_L4.pdb');
-%     %      ORf = dir('*_D5_L4.pdb');
-%     figure; hold on;
-%     for ij = 1:2
-%
-%         fg = fgRead(ORf(ij).name);
-%         AFQ_RenderFibers(fg,'numfibers',50,'newfig',0);
-%     end
-%     hold off;
-%     camlight 'headlight'
-% end
+%% check fiber shapes
+if show,
+    for i =id
+        SubDir = fullfile(homeDir,subDir{i});
+        fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
+        %     newDir = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_1130');
+        %     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
+        dtDir  = fullfile(homeDir,subDir{i},'dwi_2nd/dt6.mat');
+        
+        % get .pdb filename
+        ORf = dir(fullfile(fgDir,'*_D4L4.pdb'));
+        % render fibers
+        figure; hold on;
+        for ij = 1:2
+            fg = fgRead(ORf(ij).name);
+            AFQ_RenderFibers(fg,'numfibers',50,'newfig',0);
+        end
+        dt6 = dtiLoadDt6(dtDir);
+        t1 = niftiRead(dt6.files.t1);
+        AFQ_AddImageTo3dPlot(t1,[0 0 -10]);
+        axis image
+        hold off;
+        camlight 'headlight'
+    end
+    clear fg, clear t1, clear ORf;
+end
 
-
-% %% Copy generated fg to fiberDirectory for AFQ analysis
-%
-% for i =id
-%     SubDir = fullfile(homeDir,subDir{i});
-%     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
-%
-%     % get .pdb filename
-%     LORf = dir(fullfile(fgDir,'*Lt-LGN4*_D4_L4.pdb'));
-%     RORf = dir(fullfile(fgDir,'*Rt-LGN4*_D4_L4.pdb'));
-%
-%     %      ORf = dir('*_D5_L4.pdb');
-%     %     for ij = 1:2
-%     %         cd(newDir)
-%     fgL = fgRead(LORf.name);
-%     fgR = fgRead(RORf.name);
-%
-%     fgL.name = 'LOR1206_D4L4';
-%     fgR.name = 'ROR1206_D4L4';
-%     %         fgWrite(fgL,[fgL.name ,'.pdb'],'.pdb')
-%     mtrExportFibers(fgL, fullfile(fgDir,fgL.name), [], [], [], 2);
-%     mtrExportFibers(fgR, fullfile(fgDir,fgR.name), [], [], [], 2);
-%     %         fgWrite(fgR,'ROR1206_D4L4.pdb','.pdb')
-%     %     end
-% end
-
-%% measure diffusion properties
-% see runSO_DivideFibersAcordingToFiberLength_3SD
-
-% %% AFQ_removeFiberOutliers
-% for i =id
-%     SubDir = fullfile(homeDir,subDir{i});
-%     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
-%
-%     % get .pdb filename
-%     ORf(1) = dir(fullfile(fgDir,'*fg_OR_Top100K_V1_3mm_clipped_LGN4mm_Rt-LGN4*NOT1201.pdb'));
-%     ORf(2) = dir(fullfile(fgDir,'*fg_OR_Top100K_V1_3mm_clipped_LGN4mm_Lt-LGN4*NOT1201.pdb'));
-%
-%     for ij = 1:2
-%         fg = fgRead(fullfile(fgDir,ORf(ij).name));
-%
-%         % remove outlier fiber
-%         maxDist =4;
-%         maxLen = 2;
-%         numNodes = 50;
-%         M = 'mean';
-%         count = 1;
-%         show = 1;
-%
-%         [fgclean ,keep] =  AFQ_removeFiberOutliers(fg,maxDist,maxLen,numNodes,M,count,show);
-%
-%         for l =1:length(fgclean.params)
-%             fgclean.params{1,l}.stat=fgclean.params{1,l}.stat(keep);
-%         end
-%         fgclean.pathwayInfo = fgclean.pathwayInfo(keep);
-%
-%         % Align fiber direction from Anterior to posterior
-%         fgclean = SO_AlignFiberDirection(fgclean,'AP');
-%
-%         % save new fg.pdb file
-%         fibername       = sprintf('%s_D4L2.pdb',fgclean.name);
-%         mtrExportFibers(fgclean,fullfile(fgDir,fibername),[],[],[],2);
-%
-%         %         %% to save the pdb file.
-%         %         cd(newDir)
-%         %         fibername       = sprintf('%s_D4_L2.pdb',fgclean.name);
-%         %         mtrExportFibers(fgclean,fibername,[],[],[],2);
-%
-%         %         end
-%     end
-% end
-% %% check fg look
-% for i =id
-%     SubDir = fullfile(homeDir,subDir{i});
-%     %     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
-%     newDir = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_1130');
-%     %     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
-%     %     dtDir  = fullfile(homeDir,subDir{i},'dwi_2nd');
-%
-%     cd(newDir)
-%     % get .pdb filename
-%     ORf = dir('*_D4_L2.pdb');
-%     %      ORf = dir('*_D5_L4.pdb');
-%     figure; hold on;
-%     for ij = 1:2
-%
-%         fg = fgRead(ORf(ij).name);
-%         AFQ_RenderFibers(fg,'numfibers',50,'newfig',0);
-%     end
-%     hold off;
-%     camlight 'headlight'
-% end

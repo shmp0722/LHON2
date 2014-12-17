@@ -38,8 +38,29 @@ c = Lmm<x(4) & Lmm>=x(3);
 d = Lmm<x(5) & Lmm>=x(4);
 e = Lmm<=x(6) & Lmm>=x(5);
 
-%% draw histgraph if you want
+%     a = Lmm(Lmm<x(2));
+%     b = Lmm( Lmm<x(3) & Lmm>=x(2));
+%     c = Lmm( Lmm<x(4) & Lmm>=x(3));
+%     d = Lmm( Lmm<x(5) & Lmm>=x(4));
+%     e = Lmm( Lmm<=x(6) & Lmm>=x(5));
+
+%% histgram showing distribution
 if showHist==1
+    
+=======
+    x = prctile(Lmm,[0 20 40 60 80 100]);    
+    Med = median(Lmm);
+    
+    % Classfy fibers in 5 group
+    a = Lmm<x(2);
+    b = Lmm<x(3) & Lmm>=x(2);
+    c = Lmm<x(4) & Lmm>=x(3);
+    d = Lmm<x(5) & Lmm>=x(4);
+    e = Lmm<=x(6) & Lmm>=x(5);
+    
+    %% draw histgraph if you want
+    if showHist==1
+>>>>>>> simplify:DivideFiversbyLength/SO_DivideFibersAcordingToFiberLength_percentile.m
     figure;hold on;
     [n, xout]=hist(Lmm,20);
     bar(xout,n,'FaceColor','b','EdgeColor','k');
@@ -50,6 +71,7 @@ if showHist==1
     plot([x(3) x(3)],[0 max(n)],'--r');
     plot([x(4) x(4)],[0 max(n)],'--r');
     plot([x(5) x(5)],[0 max(n)],'--r');
+<<<<<<< HEAD:Code/3RP/SO_DivideFibersAcordingToFiberLength_percentile.m
 end
 
 %% creat new fibers
@@ -79,7 +101,36 @@ fgF = {fg, fg_20,fg_40,fg_60,fg_80,fg_100};
 
 
 %% let's get diffusivities
-
+=======
+    end
+        
+    %% creat new fibers     
+    if sum(a) <5;a =[];
+    else
+        fg_20 = dtiNewFiberGroup('fg_20','b',[],[],fg_orig.fibers(logical(a)));
+    end
+    if sum(b) <5;b =[];
+    else
+        fg_40 = dtiNewFiberGroup('fg_40','b',[],[],fg_orig.fibers(logical(b)));
+    end
+    if sum(c) <5;c =[];
+    else
+        fg_60  = dtiNewFiberGroup('fg_60','b',[],[],fg_orig.fibers(logical(c)));
+    end
+    if sum(d) <5;fg_SDm3 =[];
+    else
+        fg_80  = dtiNewFiberGroup('fg_80','b',[],[],fg_orig.fibers(logical(d)));
+    end
+    if sum(e) <5;e =[];
+    else
+        fg_100  = dtiNewFiberGroup('fg_100','b',[],[],fg_orig.fibers(logical(e)));
+    end
+    
+    fgF = {fg, fg_20,fg_40,fg_60,fg_80,fg_100};
+   
+      
+%% calicurate diffusivities 
+>>>>>>> simplify:DivideFiversbyLength/SO_DivideFibersAcordingToFiberLength_percentile.m
 for jj =1:length(fgF)
     %     direction ='AP';
     %     Nodes =100;

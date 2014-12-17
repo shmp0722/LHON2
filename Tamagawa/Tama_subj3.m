@@ -1,4 +1,4 @@
-function [homeDir,subDir] = Tama_subj3
+function [homeDir,subDir,AMDC,JMDC] = Tama_subj3
 
 % set directory to Tamagawa subject groups
 % [homeDir,subDir] = Tama_subj3
@@ -24,3 +24,6 @@ subDir = {...
     'JMD-Ctl07-SY-20141028-DWI'
     'JMD-Ctl14-YM-20141028-DWI'
     'LHON4-GK-dMRI-2014-11-25'};
+%%
+AMDC = 1:10;
+JMDC = 11:16;

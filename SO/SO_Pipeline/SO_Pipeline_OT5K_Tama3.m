@@ -9,18 +9,17 @@ for i = id
     fgDir = (fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OT_5K'));
     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
     
-%     cd(fgDir)
     % load fg
-    fgf = {'*fg_OT_5K_Optic-Chiasm_Lt-LGN4*.pdb'
-        '*fg_OT_5K_Optic-Chiasm_Rt-LGN4*.pdb'};
-    roif= {'Right-Cerebral-White-Matter','Left-Cerebral-White-Matter'};
+    fgf = {'*_Lt-LGN4*.pdb'
+        '*_Rt-LGN4*.pdb'};
+    roif= {'41_Right-Cerebral-White-Matter.mat','2_Left-Cerebral-White-Matter.mat'};
     
     for j = 1:2
         % load roi
-%         cd(roiDir)
-        roi = dtiReadRoi(fullfile(roiDir,(roif{j})));
+        roi = dtiReadRoi(fullfile(roiDir,roif{j}));
         fgF = dir(fullfile(fgDir,fgf{j}));
-        fg = fgRead((fullfile(fgDir,fgF.name)));
+        
+        fg = fgRead((fullfile(fgDir,fgF(end).name)));
         
         % remove Fibers don't go through CC using dtiIntersectFibers
         [fgOut,~,keep,~] = dtiIntersectFibersWithRoi([],'not',[],roi,fg);

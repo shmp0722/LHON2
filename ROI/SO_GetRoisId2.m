@@ -37,61 +37,6 @@ for i = id
     end
 end
 
-% %% Create ROI.mat from aparc+aseg.nii.gz
-% for i =id;
-%     roiDir =fullfile(homeDir,subDir{i},'dwi_2nd','ROIs');
-%     % aparc+aseg.nii.gz
-%     fsIn =fullfile(fsDir,subDir{i},'mri/aparc+aseg.nii.gz');
-%     % take label name from LUT
-%     labelVal = [ 2 4 7 8 9 10 12 16 17 24 41 43 46 47 48 49 51 53 85 219 220 251 252 253 254 255];
-% %     labelVal = [ 2 4 7 8 9 16 17 24 43 46 47 48 49 51 53 85 219 220 251 252 253 254 255]; % 10, 12, 41
-% %         labelVal = [ 2 41];
-%
-%     for ii = 1:length(labelVal);
-%         % nifti ROI
-%         outfileName = fs_getROILabelNameFromLUT(labelVal(ii));
-%         savefile =fullfile(fsDir,subDir{i},'mri',outfileName);
-%         if ~exist([savefile,'.nii.gz']),
-%             fs_aparcAsegLabelToNiftiRoi(fsIn,labelVal(ii),[savefile,'.nii.gz'])
-%
-%             % ROI.mat
-%             niftiROI       = [savefile,'.nii.gz'];
-%             maskValue   =  0;       % All nonZero values are used for the mask
-%             outName     = [outfileName,'.mat'];
-%             outFile     = fullfile(roiDir,outName);
-%             outType     = 'mat';  binary = true; save = true;
-%
-%             % transform nifti to mat
-%             dtiRoiFromNifti(niftiROI,maskValue,outFile,outType,binary,save);
-%         end
-%     end
-% end
-% %% If fs_aparcAsegLabelToNiftiRoi does not worl well
-% % all roi is empty
-%
-% for i =id;
-%     roiDir =fullfile(homeDir,subDir{i},'dwi_2nd','ROIs');
-%     rois = dir(fullfile(roiDir,'aparc+aseg*'));
-%
-% %     if ~empty(rois),
-%         cd(roiDir)
-%         for jj = 1:length(rois)
-%
-%             % take label number from aparc+aseg label
-%             [~,f,~]=fileparts(rois(jj).name);
-%             ind_s = find(f=='_');
-%             ind_e = length(f);
-%             labelVal = f(ind_s+1:ind_e);
-%
-%             savefile = [fs_getROILabelNameFromLUT(labelVal), '.mat'];
-%             movefile(rois(jj).name, savefile);
-%             cur_roi = dtiReadRoi(savefile);
-%             cur_roi.name = fs_getROILabelNameFromLUT(labelVal);
-%             dtiWriteRoi(cur_roi,savefile)
-%         end
-% %     end
-% end
-%
 %% Create V1,V2,MT ROI from fs label file
 for i = id
     hemi= {'lh','rh'};
