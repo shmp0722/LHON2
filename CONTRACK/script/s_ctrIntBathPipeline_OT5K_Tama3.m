@@ -23,7 +23,8 @@ ctrParams.subs = {...
 %     'AMD-Ctl07-MS-61yo-dMRI-Anatomy'
 %     'AMD-Ctl08-HO-62yo-dMRI-Anatomy'
 %     'AMD-Ctl09-KH-70yo-dMRI-Anatomy-dMRI'
-    'AMD-Ctl10-TH-65yo-dMRI-Anatomy-dMRI'};
+    'AMD-Ctl10-TH-65yo-dMRI-Anatomy-dMRI'
+    'LHON7-TT-dMRI-Anatomy'};
 % set parameter
 ctrParams.roi1 = {'85_Optic-Chiasm','85_Optic-Chiasm'};
 ctrParams.roi2 = {'Rt-LGN4','Lt-LGN4'};

@@ -1,7 +1,7 @@
-function [homeDir,subDir,AMDC,JMDC] = Tama_subj3
+function [homeDir,subDir,AMDC,JMDC,AMD] = Tama_subj3
 
 % set directory to Tamagawa subject groups
-% [homeDir,subDir] = Tama_subj3
+% [homeDir,subDir,AMDC,JMDC,AMD] = Tama_subj3
 
 %% Set the path to data directory
 homeDir = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan3';
@@ -20,10 +20,15 @@ subDir = {...
     'JMD-Ctl05-MT-20141028-DWI'
     'JMD-Ctl07-SY-20141028-DWI'
     'JMD-Ctl14-YM-20141028-DWI'
-    'JMD-Ctl05-MT-20141028-DWI'
-    'JMD-Ctl07-SY-20141028-DWI'
-    'JMD-Ctl14-YM-20141028-DWI'
-    'LHON4-GK-dMRI-2014-11-25'};
+    'LHON4-GK-dMRI-2014-11-25'
+    'LHON7-TT-dMRI-Anatomy'
+    'AMD-01-dMRI-Anatomy-dMRI'
+    'AMD-02-YM-dMRI-Anatomy'
+    'AMD-03-CK-68yo-dMRI-Anatomy'
+    'AMD-04-KM-72yo-dMRI-Anatomy'
+    'AMD-05-YH-84yo-dMRI-Anatomy'
+    'AMD-Ctl11-YMS-64yo-dMRI-Anatomy'};
 %%
-AMDC = 1:10;
-JMDC = 11:16;
+AMDC = [1:10,21];
+JMDC = 11:13;
+AMD  = 16:20;

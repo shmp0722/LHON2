@@ -21,7 +21,7 @@ fibID =3;%4:6 %ROR
 sdID = 1;%:7
 % make one diffusivities value sheet
 % merge both hemisphere
-for subID = 1:length(subDir);
+for subID = 1:length(TractProfile);
     if isempty(TractProfile{subID,fibID}{sdID}.nfibers);
         fa(subID,:) =nan(1,100);
     else
@@ -163,7 +163,7 @@ axis([10, 90 ,0.299999, 1.700001])
 
 %% OR
 fibID = 1;
-for subID = 1:length(subDir);
+for subID = 1:length(TractProfile);
     if isempty(TractProfile{subID,fibID}{sdID}.nfibers);
         fa(subID,:) =nan(1,100);
     else

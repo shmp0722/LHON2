@@ -8,9 +8,11 @@ function TractProfile = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,
 % Example
 % fg = fgRead('fg');
 % dt = dtiLoadDt6('dt6.mat');
-% fiberdirection = 'AP','LR'or 'SI'
-% nodes =100;% default
+% fiberDirection = 'AP','LR'or 'SI';
+% Nnodes =100;% default
 % weight = 1;
+%
+% [TractProfile] = SO_FiberValsInTractProfiles(fg,dt,fiberDirection,Nnodes,weight) 
 %
 % SO @Vista lab 2014
 
