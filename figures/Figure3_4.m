@@ -35,10 +35,6 @@ fgrOR = fgRead(fName);
 fName = fullfile(ORfgDir,'LORV13mmClipBigNotROI5_clean_clean_D5_L4.mat');
 fglOR = fgRead(fName);
 
-% occipital callosal fiber
-% cd(OCFfgDir)
-% fg3 = fgRead('OCF_fsCC_Ctr150_clean.pdb');
-
 % Optic tract
 fglOT = fullfile(dirOTfg,'fg_OT_5K_Optic-Chiasm_Lt-LGN4_2013-08-29_22.32.30-Right-Cerebral-White-Matter_Ctrk100_AFQ_92.pdb');
 fglOT = fgRead(fglOT);
