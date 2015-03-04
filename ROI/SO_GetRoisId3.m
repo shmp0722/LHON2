@@ -19,7 +19,7 @@ function SO_GetRoisId3(id)
 
 %% Set directory
 [homeDir,subDir] = Tama_subj3;
-fsDir   = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/freesurfer';
+fsDir   =  getenv('SUBJECTS_DIR');
 
 %% transform fs segmentation files.mgz to .nii.gz
 for i = id
@@ -108,10 +108,10 @@ for i = id
     % Clip ROIs
     apClip=[-120 -60];
     [~, lh_V1roi] = dtiRoiClip(lh_V1roi, [], apClip, []);
-    dtiWriteRoi(lh_V1roi, fullfile(Rdir,lh_V1roi.name))
+    dtiWriteRoi(lh_V1roi, fullfile(RDir,lh_V1roi.name))
     
     [~, rh_V1roi] = dtiRoiClip(rh_V1roi, [], apClip, []);
-    dtiWriteRoi(rh_V1roi, fullfile(Rdir,rh_V1roi.name))
+    dtiWriteRoi(rh_V1roi, fullfile(RDir,rh_V1roi.name))
 end
 
 % %% Create fs corpus callosum ROI

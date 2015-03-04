@@ -1,4 +1,4 @@
-function SO_GetRois
+function SO_GetRois(homeDir,subDir)
 % This function return ROIs.mat to generate optic tract and optic radiation
 % using conTrack.
 %
@@ -18,9 +18,10 @@ function SO_GetRois
 % SO Vista lab 2014
 
 %% Set directory
-[homeDir,subDir] = Tama_subj;
-fsDir   = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/freesurfer';
-
+if notDefined('homeDir')||notDefined('subDir')
+    [homeDir,subDir] = fileparts(pwd);
+    fsDir  = getenv('SUBJECTS_DIR');
+end
 %% transform fs segmentation files.mgz to .nii.gz
 for i = 1:length(subDir)
     mgzInDir = fullfile(fsDir,subDir{i},'/mri');
@@ -145,9 +146,9 @@ for i = 1:length(subDir)  % 3 imcomplete
     % Load V1 ROIs
     RDir = fullfile(homeDir,subDir{i},'/dwi_2nd/ROIs');
     lh_V1roi =fullfile(RDir,'lh_V1_smooth3mm.mat');
-    rh_V1roi =fullfile(RDir,'rh_V1_smooth3mm.mat');    
+    rh_V1roi =fullfile(RDir,'rh_V1_smooth3mm.mat');
     lh_V1roi = dtiReadRoi(lh_V1roi);
-    rh_V1roi = dtiReadRoi(rh_V1roi);    
+    rh_V1roi = dtiReadRoi(rh_V1roi);
     
     % Clip ROIs
     apClip=[-120 -60];
@@ -155,7 +156,7 @@ for i = 1:length(subDir)  % 3 imcomplete
     dtiWriteRoi(lh_V1roi, lh_V1roi.name)
     
     [~, rh_V1roi] = dtiRoiClip(rh_V1roi, [], apClip, []);
-    dtiWriteRoi(rh_V1roi, rh_V1roi.name)    
+    dtiWriteRoi(rh_V1roi, rh_V1roi.name)
 end
 
 % %% Create fs corpus callosum ROI

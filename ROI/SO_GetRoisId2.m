@@ -18,8 +18,8 @@ function SO_GetRoisId2(id)
 % SO Vista lab 2014
 
 %% Set directory
-[homeDir,subDir] = Tama_subj;
-fsDir   = '/biac4/wandell/biac2/wandell/data/DWI-Tamagawa-Japan/freesurfer';
+[homeDir,subDir] = Tama_subj2;
+fsDir   =  getenv('SUBJECTS_DIR');
 
 %% transform fs segmentation files.mgz to .nii.gz
 for i = id
