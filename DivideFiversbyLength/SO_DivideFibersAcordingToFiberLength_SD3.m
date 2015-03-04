@@ -61,8 +61,6 @@ function [TractProfile, fg_SDm3,fg_SDm2,fg_SDm1,fg_SD1,fg_SD2,fg_SD3]...
     fg_SD3  = dtiNewFiberGroup('fg_SD3','b',[],[],fg_orig.fibers(logical(SD_3p)));
     end
     
-   
-    
    fgF = {fg, fg_SDm3,fg_SDm2,fg_SDm1,fg_SD1,fg_SD2,fg_SD3};
    
       

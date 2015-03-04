@@ -54,23 +54,27 @@ end
 
 %% creat new fibers
 % In case 
-if sum(a) <5;a =[];
+if sum(a) <5;fg_20 =[];
 else
     fg_20 = dtiNewFiberGroup('fg_20','b',[],[],fg_orig.fibers(logical(a)));
 end
-if sum(b) <5;b =[];
+
+if sum(b) <5;fg_40 =[];
 else
     fg_40 = dtiNewFiberGroup('fg_40','b',[],[],fg_orig.fibers(logical(b)));
 end
-if sum(c) <5;c =[];
+
+if sum(c) <5;fg_60 =[];
 else
     fg_60  = dtiNewFiberGroup('fg_60','b',[],[],fg_orig.fibers(logical(c)));
 end
-if sum(d) <5;fg_SDm3 =[];
+
+if sum(d) <5; fg_80 =[];
 else
     fg_80  = dtiNewFiberGroup('fg_80','b',[],[],fg_orig.fibers(logical(d)));
 end
-if sum(e) <5;e =[];
+
+if sum(e) <5;fg_100 =[];
 else
     fg_100  = dtiNewFiberGroup('fg_100','b',[],[],fg_orig.fibers(logical(e)));
 end

@@ -76,7 +76,9 @@ end
 %% exclude fibers from contrack tract using way point ROI
 for i = id % 22
     SubDir = fullfile(homeDir,subDir{i});
-    fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
+%     fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_Top100K_V1_3mm_clipped_LGN4mm');
+    fgDir  = fullfile(SubDir,'/dwi_2nd/fibers/conTrack/OR_100K');
+
     roiDir = fullfile(SubDir,'/dwi_2nd/ROIs');
     
     % ROI file names you want to merge

@@ -1,11 +1,17 @@
-function s_ctrIntBathPipeline_OT5K_Tama3
+function s_ctrIntBathPipeline_OT5K_Tama3(id)
 
 % CtrInitBatchPipeline
-  [homeDir,subDir] = Tama_subj3;
 
+%% set to Tamagawa3
+
+[homeDir,subDir,JMD,CRD,LHON,Ctl,RP,AMDC] = Tama_subj2;
+
+% pick up squeeae subjects
+
+subs = reshape1d(subDir(id));
+  
 %% Set ctrInitBatchParams
-%
-%
+% Create Params structure
 ctrParams = ctrInitBatchParams;
 
 ctrParams.projectName = 'OT_5K';
@@ -13,24 +19,14 @@ ctrParams.logName = 'myConTrackLog';
 ctrParams.baseDir = homeDir;
 ctrParams.dtDir = 'dwi_2nd';
 ctrParams.roiDir = '/dwi_2nd/ROIs';
-ctrParams.subs = {...
-    subDir{1}
-%     'AMD-Ctl02-YM-dMRI-Anatomy-2014-09-09'
-%     'AMD-Ctl03-TS-dMRI-Anatomy-2014-10-28'
-%     'AMD-Ctl04-AO-61yo-dMRI-Anatomy'
-%     'AMD-Ctl05-TM-71yo-dMRI-Anatomy'
-%     'AMD-Ctl06-YM-66yo-dMRI-Anatomy'
-%     'AMD-Ctl07-MS-61yo-dMRI-Anatomy'
-%     'AMD-Ctl08-HO-62yo-dMRI-Anatomy'
-%     'AMD-Ctl09-KH-70yo-dMRI-Anatomy-dMRI'
-    'AMD-Ctl10-TH-65yo-dMRI-Anatomy-dMRI'
-    'LHON7-TT-dMRI-Anatomy'};
+ctrParams.subs =subs;
+
 % set parameter
 ctrParams.roi1 = {'85_Optic-Chiasm','85_Optic-Chiasm'};
 ctrParams.roi2 = {'Rt-LGN4','Lt-LGN4'};
 ctrParams.nSamples = 5000;
-ctrParams.maxNodes = 240;
-ctrParams.minNodes = 10;
+ctrParams.maxNodes = 150;
+ctrParams.minNodes = 20;
 ctrParams.stepSize = 1;
 ctrParams.pddpdfFlag = 0;
 ctrParams.wmFlag = 0;
